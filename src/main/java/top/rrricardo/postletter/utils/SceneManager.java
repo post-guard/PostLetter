@@ -3,6 +3,7 @@ package top.rrricardo.postletter.utils;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import jfxtras.styles.jmetro.JMetro;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import top.rrricardo.postletter.PostLetter;
@@ -14,6 +15,8 @@ import java.util.Stack;
  * 场景管理工具
  */
 public class SceneManager {
+    private static final JMetro s_jMetro = new JMetro();
+
     @Nullable
     private static Stage stage = null;
     private static final Stack<SceneNode> sceneStack = new Stack<>();
@@ -84,6 +87,7 @@ public class SceneManager {
         if (stage == null) {
             throw new IllegalCallerException("没有设置stage");
         }
+        s_jMetro.setScene(node.scene);
         stage.setScene(node.scene);
         stage.setTitle(node.title);
     }
