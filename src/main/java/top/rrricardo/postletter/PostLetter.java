@@ -1,26 +1,19 @@
 package top.rrricardo.postletter;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
-import jfxtras.styles.jmetro.JMetro;
-import jfxtras.styles.jmetro.Style;
+import top.rrricardo.postletter.utils.SceneManager;
 
 import java.io.IOException;
 
 public class PostLetter extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(PostLetter.class.getResource("hello-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
+        SceneManager.setStage(stage);
 
-        // 设置有的哥们喜欢的JMetro
-        var jMetro = new JMetro(Style.LIGHT);
-        jMetro.setScene(scene);
+        var scene = SceneManager.createScene("hello-view.fxml", 300, 200);
+        SceneManager.setPrimaryScene(scene, "你好");
 
-        stage.setTitle("PostLetter");
-        stage.setScene(scene);
         stage.show();
     }
 
