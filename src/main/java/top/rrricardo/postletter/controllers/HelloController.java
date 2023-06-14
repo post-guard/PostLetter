@@ -1,4 +1,4 @@
-package top.rrricardo.postletter;
+package top.rrricardo.postletter.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
