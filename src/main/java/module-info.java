@@ -5,4 +5,6 @@ module top.rrricardo.postletter {
                             
     opens top.rrricardo.postletter to javafx.fxml;
     exports top.rrricardo.postletter;
+    exports top.rrricardo.postletter.StageController;
+    opens top.rrricardo.postletter.StageController to javafx.fxml;
 }
