@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="top.rrricardo.postletter.controllers.HomeController">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="top.rrricardo.postletter.controllers.HomeController">
    <children>
       <GridPane layoutX="212.0" layoutY="171.0" prefHeight="245.0" prefWidth="376.0">
         <columnConstraints>
@@ -22,5 +23,6 @@
             <Label prefHeight="62.0" prefWidth="257.0" text="登录成功，已进入主页！" GridPane.columnIndex="1" GridPane.rowIndex="1" />
          </children>
       </GridPane>
+      <Button fx:id="exitButton" onAction="#onExitClick" layoutX="323.0" layoutY="92.0" mnemonicParsing="false" prefHeight="62.0" prefWidth="102.0" text="退出登录" />
    </children>
 </AnchorPane>

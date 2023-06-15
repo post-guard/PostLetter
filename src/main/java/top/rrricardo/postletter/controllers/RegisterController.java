@@ -24,8 +24,7 @@ public class RegisterController {
     //返回登录页
     @FXML
     protected void onReturnClick() throws IOException {
-        var scene = SceneManager.createScene("log-view.fxml", 390, 430);
-        SceneManager.pushScene(scene, "登录");
+        SceneManager.popScene();
     }
 
 }

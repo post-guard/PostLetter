@@ -39,6 +39,8 @@ public class LoginController {
 
             if (response != null) {
                 label.setText(response.getMessage());
+                var scene = SceneManager.createScene("home-view.fxml", 800, 600);
+                SceneManager.pushScene(scene, "主页");
             }
         } catch (NetworkException e) {
             label.setText(e.getMessage());
