@@ -6,7 +6,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.paint.Color;
 import top.rrricardo.postletter.exceptions.NetworkException;
 import top.rrricardo.postletter.models.LoginDTO;
 import top.rrricardo.postletter.models.ResponseDTO;
@@ -40,11 +39,11 @@ public class LoginController {
 
             if (response != null) {
                 label.setText(response.getMessage());
-                label.setTextFill(Color.rgb(50,255,20));
+                var scene = SceneManager.createScene("home-view.fxml", 800, 600);
+                SceneManager.pushScene(scene, "主页");
             }
         } catch (NetworkException e) {
             label.setText(e.getMessage());
-            label.setTextFill(Color.rgb(255,10,10));
         }
     }
 
