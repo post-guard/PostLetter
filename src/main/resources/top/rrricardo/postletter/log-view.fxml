@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="372.0" prefWidth="390.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="top.rrricardo.postletter.controllers.LogController">
+  <columnConstraints>
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="229.199951171875" minWidth="10.0" prefWidth="85.40003662109375" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="381.59996337890624" minWidth="10.0" prefWidth="254.4000030517578" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="381.59996337890624" minWidth="10.0" prefWidth="124.79999694824221" />
+  </columnConstraints>
+  <rowConstraints>
+      <RowConstraints maxHeight="123.4" minHeight="10.0" prefHeight="41.79999389648438" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="203.39999856948853" minHeight="10.0" prefHeight="45.20000610351562" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="216.39999999999998" minHeight="10.0" prefHeight="36.999975585937506" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="248.20001831054685" minHeight="10.0" prefHeight="36.20002441406248" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="269.19998474121087" minHeight="10.0" prefHeight="27.399987792968744" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="290.20000915527345" minHeight="10.0" prefHeight="34.600012207031256" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="254.20000915527342" minHeight="10.0" prefHeight="54.59996032714844" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="248.20001831054685" minHeight="10.0" prefHeight="111.40003967285156" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <Label prefHeight="37.0" prefWidth="186.0" text="请输入账号" GridPane.columnIndex="1" />
+      <TextField prefHeight="23.0" prefWidth="262.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <Label prefHeight="27.0" prefWidth="127.0" text="请输入密码" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <PasswordField GridPane.columnIndex="1" GridPane.rowIndex="3" />
+      <Button fx:id="okButton" mnemonicParsing="false" onAction="#onOKClick" prefHeight="23.0" prefWidth="230.0" text="确认登录" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+      <Button fx:id="registerButton" mnemonicParsing="false" onAction="#onRegisterClick" prefHeight="23.0" prefWidth="138.0" text="新用户注册" textFill="#1968d7" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+      <Label fx:id="label" prefHeight="15.0" prefWidth="127.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+   </children>
+</GridPane>
