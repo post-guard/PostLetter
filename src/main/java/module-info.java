@@ -10,4 +10,5 @@ module top.rrricardo.postletter {
     exports top.rrricardo.postletter;
     exports top.rrricardo.postletter.controllers;
     opens top.rrricardo.postletter.controllers to javafx.fxml;
+    opens top.rrricardo.postletter.models to com.fasterxml.jackson.databind;
 }

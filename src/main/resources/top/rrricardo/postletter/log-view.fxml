@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="372.0" prefWidth="390.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="top.rrricardo.postletter.controllers.LogController">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="372.0" prefWidth="390.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="top.rrricardo.postletter.controllers.LogController">
   <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="229.199951171875" minWidth="10.0" prefWidth="85.40003662109375" />
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="381.59996337890624" minWidth="10.0" prefWidth="254.4000030517578" />
@@ -26,9 +26,9 @@
   </rowConstraints>
    <children>
       <Label prefHeight="37.0" prefWidth="186.0" text="请输入账号" GridPane.columnIndex="1" />
-      <TextField prefHeight="23.0" prefWidth="262.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <TextField fx:id="usernameInput" prefHeight="23.0" prefWidth="262.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
       <Label prefHeight="27.0" prefWidth="127.0" text="请输入密码" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-      <PasswordField GridPane.columnIndex="1" GridPane.rowIndex="3" />
+      <PasswordField fx:id="passwordInput" GridPane.columnIndex="1" GridPane.rowIndex="3" />
       <Button fx:id="okButton" mnemonicParsing="false" onAction="#onOKClick" prefHeight="23.0" prefWidth="230.0" text="确认登录" GridPane.columnIndex="1" GridPane.rowIndex="5" />
       <Button fx:id="registerButton" mnemonicParsing="false" onAction="#onRegisterClick" prefHeight="23.0" prefWidth="138.0" text="新用户注册" textFill="#1968d7" GridPane.columnIndex="1" GridPane.rowIndex="6" />
       <Label fx:id="label" prefHeight="15.0" prefWidth="127.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />

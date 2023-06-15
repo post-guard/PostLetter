@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane prefHeight="430.0" prefWidth="390.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="top.rrricardo.postletter.controllers.RegisterController">
+<AnchorPane prefHeight="430.0" prefWidth="390.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="top.rrricardo.postletter.controllers.RegisterController">
    <children>
       <GridPane alignment="CENTER" layoutX="10.0" layoutY="32.0" prefHeight="282.0" prefWidth="402.0">
         <columnConstraints>
