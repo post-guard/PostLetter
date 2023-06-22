@@ -14,6 +14,7 @@ import top.rrricardo.postletter.services.HttpService;
 import top.rrricardo.postletter.utils.SceneManager;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class LoginController {
     @FXML
@@ -22,16 +23,37 @@ public class LoginController {
     private Button okButton;
     @FXML
     private Button registerButton;
-
+    @FXML
+    private Button faceRecognitionButton;
     @FXML
     private TextField usernameInput;
     @FXML
     private PasswordField passwordInput;
 
-    //做登录的判断
+    //点击登录按钮
     @FXML
     protected void onOKClick() throws IOException {
-        var loginDTO = new LoginDTO(Integer.parseInt(usernameInput.getText()), passwordInput.getText());
+        /*
+          判断用户是否正确输入了账号、密码
+         */
+        if(Objects.equals(usernameInput.getText(), "") && Objects.equals(passwordInput.getText(), "")){
+            label.setText("请输入用户名和密码");
+            label.setTextFill(Color.rgb(255,20,20));
+            return;
+        }
+        else if(Objects.equals(usernameInput.getText(), "")){
+            label.setText("请输入用户名");
+            label.setTextFill(Color.rgb(255,20,20));
+            return;
+        }
+        else if(Objects.equals(passwordInput.getText(), "")){
+            label.setText("请输入密码");
+            label.setTextFill(Color.rgb(255,20,20));
+            return;
+        }
+
+
+        var loginDTO = new LoginDTO(usernameInput.getText(), passwordInput.getText());
 
         try {
             var response = HttpService.postBody("http://10.28.243.52:10188/user/login", loginDTO,
@@ -51,6 +73,13 @@ public class LoginController {
             label.setText(e.getMessage());
             label.setTextFill(Color.rgb(255,20,20));
         }
+    }
+
+    //切换为人脸识别登录
+    @FXML
+    protected void onFaceRecognitionClick() throws IOException{
+        var scene = SceneManager.createScene("faceRecognition-view.fxml", 390, 430);
+        SceneManager.pushScene(scene, "刷脸登录");
     }
 
 
