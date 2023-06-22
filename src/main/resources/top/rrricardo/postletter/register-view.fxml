@@ -6,7 +6,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="430.0" prefWidth="390.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="top.rrricardo.postletter.controllers.RegisterController">
+<AnchorPane prefHeight="430.0" prefWidth="390.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="top.rrricardo.postletter.controllers.RegisterController">
    <children>
       <TextField fx:id="nicknameInput" layoutX="90.0" layoutY="45.0" promptText="昵称" AnchorPane.bottomAnchor="361.8" AnchorPane.leftAnchor="90.0" AnchorPane.rightAnchor="90.0" AnchorPane.topAnchor="45.0" />
       <TextField fx:id="userNameInput" layoutX="97.0" layoutY="89.0" promptText="用户名" AnchorPane.bottomAnchor="317.8" AnchorPane.leftAnchor="90.0" AnchorPane.rightAnchor="90.0" AnchorPane.topAnchor="89.0" />

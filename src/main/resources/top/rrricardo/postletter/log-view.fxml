@@ -6,7 +6,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="430.0" prefWidth="390.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="top.rrricardo.postletter.controllers.LoginController">
+<AnchorPane prefHeight="430.0" prefWidth="390.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="top.rrricardo.postletter.controllers.LoginController">
    <children>
       <Button fx:id="okButton" layoutX="80.0" layoutY="292.0" mnemonicParsing="false" onAction="#onOKClick" prefHeight="36.0" prefWidth="230.0" text="确认登录" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="80.0" />
       <Button fx:id="registerButton" layoutX="126.0" layoutY="354.0" mnemonicParsing="false" onAction="#onRegisterClick" prefHeight="23.0" prefWidth="138.0" text="新用户注册" textAlignment="CENTER" textFill="#1968d7" AnchorPane.leftAnchor="126.0" AnchorPane.rightAnchor="126.0" />
