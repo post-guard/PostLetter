@@ -8,6 +8,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import top.rrricardo.postletter.exceptions.NetworkException;
+import top.rrricardo.postletter.models.Configuration;
 import top.rrricardo.postletter.models.LoginDTO;
 import top.rrricardo.postletter.models.ResponseDTO;
 import top.rrricardo.postletter.services.HttpService;
@@ -63,6 +64,13 @@ public class LoginController {
             if (response != null) {
                 label.setText(response.getMessage());
                 label.setTextFill(Color.rgb(20,255,20));
+
+                //如果登录成功，就把token保存到本地
+                if(response.getData().length() != 0){
+                    String token = response.getData();
+                    Configuration.getInstance().setToken(token);
+                    Configuration.writeIntoFile();
+                }
 
                 var scene = SceneManager.createScene("home-view.fxml", 800, 600);
                 SceneManager.pushScene(scene, "主页");

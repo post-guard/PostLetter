@@ -83,8 +83,8 @@ public class RegisterController {
                                             });
 
                                     if (response != null) {
+                                        label.setText("注册成功，请返回登录页登录");
                                         label.setTextFill(Color.rgb(20, 255, 20));
-                                        label.setText(response.getMessage());
                                     }
                                 } catch (NetworkException e) {
                                     label.setText(e.getMessage());
