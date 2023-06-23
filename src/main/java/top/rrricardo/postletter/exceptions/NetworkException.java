@@ -14,4 +14,8 @@ public class NetworkException extends Exception {
         super(message);
         this.statusCode = statusCode;
     }
+
+    public int getStatusCode() {
+        return statusCode;
+    }
 }
