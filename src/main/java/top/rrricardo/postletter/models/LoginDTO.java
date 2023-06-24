@@ -1,13 +1,24 @@
 package top.rrricardo.postletter.models;
 
+import java.net.Inet4Address;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 public class LoginDTO {
     private String username;
 
     private String password;
 
+    private String hostname;
+
     public LoginDTO(String username, String password) {
         this.username = username;
         this.password = password;
+        try {
+            hostname = Inet4Address.getLocalHost().getHostName();
+        } catch (UnknownHostException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 
