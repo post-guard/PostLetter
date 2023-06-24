@@ -2,7 +2,6 @@ package top.rrricardo.postletter.models;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import top.rrricardo.postletter.controllers.LoginController;
 import top.rrricardo.postletter.utils.SceneManager;
 
 import java.io.File;
@@ -67,8 +66,7 @@ public class Configuration {
 
             //本地令牌文件为空，需要重新登录
             if(fis.read(buffer) == -1){
-                var scene = SceneManager.createScene("log-view.fxml", 390, 430);
-                SceneManager.setPrimaryScene(scene, "登录已过期，请重新登录");
+                SceneManager.replaceScene("log-view.fxml", 390, 430, "登录已过期，请重新登录");
             }
 
             String result = new String(buffer);

@@ -11,9 +11,8 @@ public class PostLetter extends Application {
     public void start(Stage stage) throws IOException {
         SceneManager.setStage(stage);
         stage.setResizable(false);
-        var scene = SceneManager.createScene("log-view.fxml", 390, 430);
-        SceneManager.setPrimaryScene(scene, "登录");
-
+        //初始界面为登录页
+        SceneManager.replaceScene("log-view.fxml", 390, 430, "登录");
 
         stage.show();
     }

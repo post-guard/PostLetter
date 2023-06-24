@@ -1,23 +1,28 @@
 package top.rrricardo.postletter.controllers;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import top.rrricardo.postletter.exceptions.NetworkException;
 import top.rrricardo.postletter.models.Configuration;
 import top.rrricardo.postletter.models.LoginDTO;
 import top.rrricardo.postletter.models.ResponseDTO;
 import top.rrricardo.postletter.services.HttpService;
+import top.rrricardo.postletter.utils.ControllerBase;
 import top.rrricardo.postletter.utils.SceneManager;
 
 import java.io.IOException;
 import java.util.Objects;
 
-public class LoginController {
+public class LoginController implements ControllerBase{
     @FXML
     private Label label;    //显示登录信息
     @FXML
@@ -31,7 +36,9 @@ public class LoginController {
     @FXML
     private PasswordField passwordInput;
 
-    //点击登录按钮
+    /**
+     *登录确认按钮
+     */
     @FXML
     protected void onOKClick() throws IOException {
         /*
@@ -72,9 +79,7 @@ public class LoginController {
                     Configuration.writeIntoFile();
                 }
 
-                var scene = SceneManager.createScene("home-view.fxml", 800, 600);
-                SceneManager.pushScene(scene, "主页");
-
+                SceneManager.createScene("home-view.fxml", 800, 600, "主页");
                 label.setText("");
             }
         } catch (NetworkException e) {
@@ -83,18 +88,32 @@ public class LoginController {
         }
     }
 
-    //切换为人脸识别登录
+    /**
+     *切换为人脸识别登录
+     */
     @FXML
     protected void onFaceRecognitionClick() throws IOException{
-        var scene = SceneManager.createScene("faceRecognition-view.fxml", 390, 430);
-        SceneManager.pushScene(scene, "刷脸登录");
+        SceneManager.createScene("faceRecognition-view.fxml", 390, 430, "刷脸登录");
     }
 
 
-    //点击注册按钮，进入注册页面
+    /**
+     * 点击注册按钮
+     */
     @FXML
     protected void onRegisterClick() throws IOException {
-        var scene = SceneManager.createScene("register-view.fxml", 390, 430);
-        SceneManager.pushScene(scene, "新用户注册");
+        SceneManager.createScene("register-view.fxml", 390, 430, "新用户注册");
     }
+
+    //还没写好，还要改，，，，，，
+    /**
+     * 按下回车，触发登录按钮
+     */
+    @FXML
+    protected void loginEnter(KeyEvent keyEvent) throws IOException{
+        if(keyEvent.getCode().equals(KeyCode.ENTER))    {
+            onOKClick();
+        }
+    }
+
 }
