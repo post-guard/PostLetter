@@ -37,4 +37,8 @@ public class LoginDTO {
     public void setUsername(String username) {
         this.username = username;
     }
+
+    public String getHostname() {
+        return hostname;
+    }
 }

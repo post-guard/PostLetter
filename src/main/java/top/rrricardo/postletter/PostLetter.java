@@ -27,7 +27,7 @@ public class PostLetter extends Application {
             //发出一个请求，以校验token的有效性
             try {
                 HttpService.setAuthorizeToken(token, "http://10.28.243.52:10188");
-                var response = HttpService.getInstance().get("/group", new TypeReference<ResponseDTO<GroupDTO[]>>(){});
+                var response = HttpService.getInstance().get("/group/", new TypeReference<ResponseDTO<GroupDTO[]>>(){});
 
                 //token还有效，无需登录，直接进入主页
                 if(response != null){

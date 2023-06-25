@@ -2,9 +2,13 @@ package top.rrricardo.postletter.controllers;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
@@ -28,7 +32,7 @@ public class ContactsController extends HomeController implements ControllerBase
     @FXML
     private HBox hBox;
     @FXML
-    private VBox vBox;
+    private ListView<GroupDTO> listView;
 
     /**
      * 点击好友，查看好友列表
@@ -47,16 +51,29 @@ public class ContactsController extends HomeController implements ControllerBase
     protected void onGroupClick() throws IOException{
 
         try {
-            var response = HttpService.getInstance().get("/group",  new TypeReference<ResponseDTO<GroupDTO[]>>(){});
+            var response = HttpService.getInstance().get("/group/",  new TypeReference<ResponseDTO<GroupDTO[]>>(){});
 
             if(response != null){
+                listView = new ListView<>();
                 GroupDTO [] groups = response.getData();
-                for(var group: groups){
-                    vBox = new VBox();
-                    Button button = new Button(group.getName());
+                ObservableList<GroupDTO> items = FXCollections.observableArrayList();
+                items.addAll(groups);
 
-                    vBox.getChildren().addAll(new Button());
-                }
+                listView.setItems(items);
+                listView.setOnMouseClicked(click -> {
+                    if(click.getClickCount() == 2){
+                        GroupDTO selectedItem = listView.getSelectionModel().getSelectedItem();
+                        System.out.println("选到的是: " + selectedItem.getName());
+                    }
+                });
+
+                listView.setCellFactory(param -> new ListCell<GroupDTO>() {
+                    public void updateItem(){
+
+                    }
+                });
+
+
 
             }
 
