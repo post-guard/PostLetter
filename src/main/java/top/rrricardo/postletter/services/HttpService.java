@@ -15,6 +15,50 @@ public class HttpService {
     private static final ObjectMapper s_mapper = new ObjectMapper();
     private static final MediaType s_json_mediaType = MediaType.get("application/json; charset=utf-8");
 
+    private static HttpService instance;
+
+    private final OkHttpClient client;
+    private final String baseUrl;
+
+    private HttpService(@NotNull String token, @NotNull String baseUrl) {
+        var builder = new OkHttpClient.Builder();
+
+        builder.authenticator((route, response) -> {
+            if (response.request().header("Authorization") != null) {
+                return null;
+            }
+
+            return response.request().newBuilder()
+                    .header("Authorization", token)
+                    .build();
+        });
+
+        client = builder.build();
+        this.baseUrl = baseUrl;
+    }
+
+    public static void setAuthorizeToken(@NotNull String token, @NotNull String baseUrl) {
+        instance = new HttpService(token, baseUrl);
+    }
+
+    @NotNull
+    public static HttpService getInstance() {
+       if (instance == null) {
+           throw new RuntimeException();
+       }
+
+       return instance;
+    }
+
+    @Nullable
+    public <T> ResponseDTO<T> get(String uri, TypeReference<ResponseDTO<T>> type) throws IOException, NetworkException {
+        var request = new Request.Builder()
+                .url(baseUrl + uri)
+                .build();
+
+        return sendHelper(client, request, type);
+    }
+
     /**
      * 发出HTTP GET请求
      *
@@ -30,7 +74,29 @@ public class HttpService {
                 .url(uri)
                 .build();
 
-        return sendHelper(request, type);
+        return sendHelper(s_client, request, type);
+    }
+
+    /**
+     * 发出HTTP POST请求
+     *
+     * @param uri  请求地址
+     * @param type 返回的响应对象类
+     * @param data 请求对象
+     * @param <R>  请求的响应对象类
+     * @param <V>  请求的对象类
+     * @return 响应对象
+     * @throws IOException 请求中的异常
+     */
+    @Nullable
+    public <R, V> ResponseDTO<R> post(String uri, @NotNull V data, TypeReference<ResponseDTO<R>> type)
+            throws IOException, NetworkException {
+        var request = new Request.Builder()
+                .post(RequestBody.create(s_mapper.writeValueAsString(data), s_json_mediaType))
+                .url(baseUrl + uri)
+                .build();
+
+        return sendHelper(client, request, type);
     }
 
     /**
@@ -52,7 +118,29 @@ public class HttpService {
                 .url(uri)
                 .build();
 
-        return sendHelper(request, type);
+        return sendHelper(s_client, request, type);
+    }
+
+    /**
+     * 发出HTTP PUT请求
+     *
+     * @param uri  请求地址
+     * @param type 返回的响应对象类
+     * @param data 请求对象
+     * @param <R>  请求的响应对象类
+     * @param <V>  请求的对象类
+     * @return 响应对象
+     * @throws IOException 请求中的异常
+     */
+    @Nullable
+    public <R, V> ResponseDTO<R> put(String uri, @NotNull V data, TypeReference<ResponseDTO<R>> type)
+            throws IOException, NetworkException {
+        var request = new Request.Builder()
+                .put(RequestBody.create(s_mapper.writeValueAsString(data), s_json_mediaType))
+                .url(baseUrl + uri)
+                .build();
+
+        return sendHelper(client, request, type);
     }
 
     /**
@@ -74,7 +162,7 @@ public class HttpService {
                 .url(uri)
                 .build();
 
-        return sendHelper(request, type);
+        return sendHelper(s_client, request, type);
     }
 
     /**
@@ -94,12 +182,32 @@ public class HttpService {
                 .url(uri)
                 .build();
 
-        return sendHelper(request, type);
+        return sendHelper(s_client, request, type);
     }
 
-    private static <T> ResponseDTO<T> sendHelper(Request request, TypeReference<ResponseDTO<T>> type)
+    /**
+     * 发起HTTP DELETE请求
+     *
+     * @param uri  请求地址
+     * @param type 请求的响应对象
+     * @param <T>  请求的响应对象类
+     * @return 响应对象
+     * @throws IOException 请求中的异常
+     */
+    @Nullable
+    public <T> ResponseDTO<T> delete(String uri, TypeReference<ResponseDTO<T>> type)
             throws IOException, NetworkException {
-        try (var response = s_client.newCall(request).execute()) {
+        var request = new Request.Builder()
+                .delete()
+                .url(baseUrl + uri)
+                .build();
+
+        return sendHelper(client, request, type);
+    }
+
+    private static <T> ResponseDTO<T> sendHelper(OkHttpClient client, Request request, TypeReference<ResponseDTO<T>> type)
+            throws IOException, NetworkException {
+        try (var response = client.newCall(request).execute()) {
             if (response.body() != null) {
                 var body = s_mapper.readValue(response.body().charStream(), type);
 
