@@ -3,15 +3,15 @@ package top.rrricardo.postletter.models;
 public class User {
     private int id;
     private String nickname;
-    private String emailAddress;
+    private String username;
 
     public User() {
 
     }
 
-    public User(String nickname, String emailAddress) {
+    public User(String nickname, String username) {
         this.nickname = nickname;
-        this.emailAddress = emailAddress;
+        this.username = username;
     }
 
     public int getId() {
@@ -30,11 +30,11 @@ public class User {
         this.nickname = nickname;
     }
 
-    public String getEmailAddress() {
-        return emailAddress;
+    public String getUsername() {
+        return username;
     }
 
-    public void setEmailAddress(String emailAddress) {
-        this.emailAddress = emailAddress;
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

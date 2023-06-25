@@ -6,6 +6,7 @@ import top.rrricardo.postletter.exceptions.NetworkException;
 import top.rrricardo.postletter.models.Configuration;
 import top.rrricardo.postletter.models.GroupDTO;
 import top.rrricardo.postletter.models.ResponseDTO;
+import top.rrricardo.postletter.models.User;
 import top.rrricardo.postletter.services.HttpService;
 import top.rrricardo.postletter.utils.SceneManager;
 
@@ -27,7 +28,7 @@ public class PostLetter extends Application {
             //发出一个请求，以校验token的有效性
             try {
                 HttpService.setAuthorizeToken(token, "http://10.28.243.52:10188");
-                var response = HttpService.getInstance().get("/group/", new TypeReference<ResponseDTO<GroupDTO[]>>(){});
+                var response = HttpService.getInstance().get("/user/", new TypeReference<ResponseDTO<User[]>>(){});
 
                 //token还有效，无需登录，直接进入主页
                 if(response != null){
