@@ -66,9 +66,10 @@ public class SceneManager {
         }
 
         var loader = new FXMLLoader(uri);
+        var newScene = new SceneNode(new Scene(loader.load(), width, height), title, loader.getController());
 
-        sceneStack.push(new SceneNode(new Scene(loader.load(), width, height), title, loader.getController()));
-
+        sceneStack.push(newScene);
+        newScene.controller.open();
         refresh();
     }
 
@@ -88,9 +89,9 @@ public class SceneManager {
         }
 
         var loader = new FXMLLoader(uri);
-
-        sceneStack.push(new SceneNode(new Scene(loader.load(), width, height), title, loader.getController()));
-
+        var newScene = new SceneNode(new Scene(loader.load(), width, height), title, loader.getController());
+        sceneStack.push(newScene);
+        newScene.controller.open();
         refresh();
     }
 
