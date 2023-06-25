@@ -5,10 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import top.rrricardo.postletter.services.HttpService;
 import top.rrricardo.postletter.utils.SceneManager;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.nio.charset.Charset;
 
 public class Configuration {
@@ -72,11 +69,11 @@ public class Configuration {
                 configuration =  mapper.readValue(result, Configuration.class);
             }
 
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            return;
         } catch (IOException e) {
-            throw new RuntimeException(e);
-        }finally {
+            e.printStackTrace();
+        } finally {
             try {
                 if (fis != null) {
                     fis.close();
