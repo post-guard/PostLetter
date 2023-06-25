@@ -9,7 +9,7 @@ public class LoginDTO {
 
     private String password;
 
-    private String hostname;
+    private final String hostname;
 
     public LoginDTO(String username, String password) {
         this.username = username;

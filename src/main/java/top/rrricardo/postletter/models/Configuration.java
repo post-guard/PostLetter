@@ -2,6 +2,7 @@ package top.rrricardo.postletter.models;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import top.rrricardo.postletter.services.HttpService;
 import top.rrricardo.postletter.utils.SceneManager;
 
 import java.io.File;
@@ -25,6 +26,8 @@ public class Configuration {
     }
     public void setToken(String token) {
         this.token = token;
+        //设置令牌
+        HttpService.setAuthorizeToken(token, "http://10.28.243.52:10188");
     }
 
     /**
@@ -64,13 +67,11 @@ public class Configuration {
             fis = new FileInputStream(file);
             byte [] buffer = new byte[1024];
 
-            //本地令牌文件为空，需要重新登录
-            if(fis.read(buffer) == -1){
-                SceneManager.replaceScene("log-view.fxml", 390, 430, "登录已过期，请重新登录");
+            if(fis.read(buffer) != -1){
+                String result = new String(buffer);
+                configuration =  mapper.readValue(result, Configuration.class);
             }
 
-            String result = new String(buffer);
-            configuration =  mapper.readValue(result, Configuration.class);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         } catch (IOException e) {

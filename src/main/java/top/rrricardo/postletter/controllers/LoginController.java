@@ -79,7 +79,8 @@ public class LoginController implements ControllerBase{
                     Configuration.writeIntoFile();
                 }
 
-                SceneManager.createScene("home-view.fxml", 800, 600, "主页");
+                //登录成功后，显示消息界面
+                SceneManager.createScene("message-view.fxml", 800, 600, "主页");
                 label.setText("");
             }
         } catch (NetworkException e) {
