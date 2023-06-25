@@ -30,36 +30,16 @@ public class SceneManager {
     }
 
     /**
-     * 设置初始场景
-     * 会情况内部的状态栈
-     * @param scene 场景
-     * @param title 标题
-     */
-    public static void setPrimaryScene(@NotNull Scene scene, @NotNull String title) {
-        sceneStack.clear();
-        sceneStack.push(new SceneNode(scene, title));
-
-        refresh();
-    }
-
-    /**
-     * 将新场景压入栈中并显示
-     * @param scene 场景
-     * @param title 标题
-     */
-    public static void pushScene(@NotNull Scene scene, @NotNull String title) {
-        sceneStack.push(new SceneNode(scene, title));
-
-        refresh();
-    }
-
-    /**
      * 弹栈 并显示上一个场景
      */
     public static void popScene() {
         if (sceneStack.size() == 1) {
             throw new IllegalCallerException("内部状态栈仅有一个状态");
         }
+
+        var item = sceneStack.peek();
+        item.controller.close();
+
         sceneStack.pop();
 
         refresh();
@@ -68,12 +48,48 @@ public class SceneManager {
     /**
      * 清空栈
      * 替换为当前的场景
-     * @param scene 场景
-     * @param title 标题
+     * @param filename 腐朽没落文件名
+     * @param width 窗口宽度
+     * @param height 窗口高度
+     * @param title 窗口标题
      */
-    public static void replaceScene(@NotNull Scene scene, @NotNull String title) {
-        sceneStack.clear();
-        sceneStack.push(new SceneNode(scene, title));
+    public static void replaceScene(String filename, int width, int height, String title) throws IOException{
+
+        for (var item : sceneStack) {
+            item.controller.close();
+        }
+        sceneStack.clear();     //清空栈
+
+        var uri = PostLetter.class.getResource(filename);
+        if (uri == null) {
+            throw new IllegalArgumentException("腐朽没落文件不存在");
+        }
+
+        var loader = new FXMLLoader(uri);
+
+        sceneStack.push(new SceneNode(new Scene(loader.load(), width, height), title, loader.getController()));
+
+        refresh();
+    }
+
+    /**
+     * 创建一个新场景并压入栈中显示
+     * @param filename 腐朽没落文件名
+     * @param width 窗口宽度
+     * @param height 窗口高度
+     * @param title 窗口标题
+     * @throws IOException 创建过程中的异常
+     */
+    public static void createScene(String filename, int width, int height, String title) throws IOException{
+
+        var uri = PostLetter.class.getResource(filename);
+        if (uri == null) {
+            throw new IllegalArgumentException("腐朽没落文件不存在");
+        }
+
+        var loader = new FXMLLoader(uri);
+
+        sceneStack.push(new SceneNode(new Scene(loader.load(), width, height), title, loader.getController()));
 
         refresh();
     }
@@ -92,24 +108,6 @@ public class SceneManager {
         stage.setTitle(node.title);
     }
 
-    /**
-     * 创建场景辅助函数
-     * @param filename 腐朽没落文件路径
-     * @param width 窗口宽度
-     * @param height 窗口高度
-     * @return 场景对象
-     * @throws IOException 创建过程中的异常
-     */
-    @NotNull
-    public static Scene createScene(@NotNull String filename, int width, int height) throws IOException {
-        var uri = PostLetter.class.getResource(filename);
-        if (uri == null) {
-            throw new IllegalArgumentException("腐朽没落文件不存在");
-        }
 
-        var loader = new FXMLLoader(uri);
-        return new Scene(loader.load(), width, height);
-    }
-
-    private record SceneNode(@NotNull Scene scene, @NotNull String title) { }
+    private record SceneNode(@NotNull Scene scene, @NotNull String title, ControllerBase controller) { }
 }

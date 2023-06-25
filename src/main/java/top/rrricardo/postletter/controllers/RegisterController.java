@@ -11,12 +11,13 @@ import top.rrricardo.postletter.exceptions.NetworkException;
 import top.rrricardo.postletter.models.CreateUserDTO;
 import top.rrricardo.postletter.models.ResponseDTO;
 import top.rrricardo.postletter.services.HttpService;
+import top.rrricardo.postletter.utils.ControllerBase;
 import top.rrricardo.postletter.utils.SceneManager;
 
 import java.io.IOException;
 import java.util.Objects;
 
-public class RegisterController {
+public class RegisterController implements ControllerBase {
     @FXML
     private Button registerButton;
     @FXML
