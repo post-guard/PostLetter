@@ -12,11 +12,13 @@ public class Message implements Serializable {
 
     private int sendId;
 
-    @NotNull
     private String text;
 
-    @NotNull
     private LocalDateTime sendTime;
+
+    public Message() {
+
+    }
 
     public Message(int sessionId, int sendId, @NotNull String text, @NotNull LocalDateTime sendTime) {
         this.sessionId = sessionId;

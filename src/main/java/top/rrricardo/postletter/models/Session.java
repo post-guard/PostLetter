@@ -13,18 +13,20 @@ public class Session implements Serializable {
     /**
      * 会话名称
      */
-    @NotNull
     private String name;
     /**
      * 会话详情
      */
-    @NotNull
     private String details;
     /**
      * 会话等级
      * 也就是会话中可以容纳的人数
      */
     private int level;
+
+    public Session() {
+
+    }
 
     public Session(@NotNull String name, @NotNull String details, int level) {
         this.name = name;

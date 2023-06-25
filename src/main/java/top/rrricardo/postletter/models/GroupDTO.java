@@ -6,16 +6,18 @@ import java.io.Serializable;
 import java.util.List;
 
 public class GroupDTO implements Serializable {
-    @NotNull
+
     private String name;
 
-    @NotNull
     private String details;
 
     private int sessionId;
 
-    @NotNull
     private List<Integer> participants;
+
+    public GroupDTO() {
+
+    }
 
     public GroupDTO(
             @NotNull String name,
