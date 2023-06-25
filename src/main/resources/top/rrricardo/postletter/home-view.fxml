@@ -1,28 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="top.rrricardo.postletter.controllers.HomeController">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="top.rrricardo.postletter.controllers.HomeController">
    <children>
-      <GridPane layoutX="212.0" layoutY="171.0" prefHeight="245.0" prefWidth="376.0">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="268.5999755859375" minWidth="10.0" prefWidth="192.00001220703126" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="396.0000244140626" minWidth="10.0" prefWidth="358.39998779296883" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
+      <VBox alignment="TOP_CENTER" layoutX="14.0" layoutY="14.0" prefHeight="572.0" prefWidth="58.0" spacing="30.0">
          <children>
-            <Label prefHeight="62.0" prefWidth="257.0" text="登录成功，已进入主页！" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Button mnemonicParsing="false" text="消息" />
+            <Button mnemonicParsing="false" text="联系人" />
+            <Button mnemonicParsing="false" text="个人主页" />
+            <Button fx:id="exitButton" mnemonicParsing="false" onAction="#onExitClick" prefHeight="62.0" prefWidth="102.0" text="退出登录" />
          </children>
-      </GridPane>
-      <Button fx:id="exitButton" onAction="#onExitClick" layoutX="323.0" layoutY="92.0" mnemonicParsing="false" prefHeight="62.0" prefWidth="102.0" text="退出登录" />
+         <opaqueInsets>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </opaqueInsets>
+      </VBox>
+      <Separator layoutX="82.0" opacity="0.8" orientation="VERTICAL" prefHeight="600.0" prefWidth="7.0" />
+      <AnchorPane layoutX="89.0" layoutY="14.0" prefHeight="572.0" prefWidth="223.0">
+         <children>
+            <ScrollPane hbarPolicy="NEVER" layoutX="2.0" layoutY="106.0" prefHeight="452.0" prefWidth="211.0" vbarPolicy="NEVER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="106.0">
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </ScrollPane>
+            <Button layoutX="10.0" layoutY="76.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="100.0" text="好友" AnchorPane.leftAnchor="10.0" />
+            <Button layoutX="112.0" layoutY="76.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="100.0" text="群组" AnchorPane.rightAnchor="10.0" />
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>
