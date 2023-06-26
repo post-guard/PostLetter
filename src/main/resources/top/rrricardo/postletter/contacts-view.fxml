@@ -2,12 +2,15 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="top.rrricardo.postletter.controllers.ContactsController">
    <children>
@@ -42,5 +45,29 @@
             </HBox>
          </children>
       </AnchorPane>
+      <Circle fx:id="circle" fill="DODGERBLUE" layoutX="535.0" layoutY="167.0" radius="52.0" stroke="BLACK" strokeType="INSIDE" />
+      <Label fx:id="circleLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="503.0" layoutY="139.0" prefHeight="55.0" prefWidth="64.0" text="任" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font size="35.0" />
+         </font>
+      </Label>
+      <VBox layoutX="469.0" layoutY="253.0" prefHeight="186.0" prefWidth="342.0" spacing="10.0">
+         <children>
+            <HBox prefHeight="27.0" prefWidth="342.0">
+               <children>
+                  <Label fx:id="label1a" prefHeight="47.0" prefWidth="78.0" text="nickname" />
+                  <Label fx:id="label1b" prefHeight="47.0" prefWidth="78.0" text="Label1" />
+               </children>
+            </HBox>
+            <HBox prefHeight="41.0" prefWidth="342.0">
+               <children>
+                  <Label fx:id="label2a" prefHeight="47.0" prefWidth="78.0" text="username" />
+                  <Label fx:id="label2b" prefHeight="47.0" prefWidth="78.0" text="Label2" />
+               </children>
+            </HBox>
+            <Button fx:id="button1" mnemonicParsing="false" prefHeight="33.0" prefWidth="128.0" text="添加好友/拉人入群" />
+            <Button fx:id="button2" mnemonicParsing="false" prefHeight="33.0" prefWidth="128.0" text="删除好友/退出群聊" />
+         </children>
+      </VBox>
    </children>
 </AnchorPane>
