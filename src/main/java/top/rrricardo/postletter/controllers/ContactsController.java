@@ -84,7 +84,7 @@ public class ContactsController extends HomeController implements ControllerBase
                 this.setText("");
             }else {
                 try {
-                    var response = HttpService.getInstance().get("/user/" + "?userId=" + friend.getFriendId(), new TypeReference<ResponseDTO<User>>() {
+                    var response = HttpService.getInstance().get("/user/" + friend.getFriendId(), new TypeReference<ResponseDTO<User>>() {
                     });
 
                     if(response != null){
@@ -135,7 +135,7 @@ public class ContactsController extends HomeController implements ControllerBase
                         if(newFriend != null){
                             try {
                                 System.out.println("666666id:" + newFriend.getFriendId());
-                                var response = HttpService.getInstance().get("/user/" + "?userId=" + newFriend.getFriendId(), new TypeReference<ResponseDTO<User>>(){});
+                                var response = HttpService.getInstance().get("/user/" + newFriend.getFriendId(), new TypeReference<ResponseDTO<User>>(){});
 
                                 if(response != null){
                                     User newUser = response.getData();
