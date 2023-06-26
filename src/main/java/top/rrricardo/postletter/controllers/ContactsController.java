@@ -7,15 +7,18 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
+import javafx.scene.control.ComboBoxBase;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.cell.ComboBoxListCell;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 
+import javafx.util.Callback;
 import top.rrricardo.postletter.exceptions.NetworkException;
 
 import top.rrricardo.postletter.models.GroupDTO;
 import top.rrricardo.postletter.models.ResponseDTO;
+import top.rrricardo.postletter.models.User;
 import top.rrricardo.postletter.services.HttpService;
 import top.rrricardo.postletter.utils.ControllerBase;
 
@@ -32,7 +35,7 @@ public class ContactsController extends HomeController implements ControllerBase
     @FXML
     private HBox hBox;
     @FXML
-    private ListView<GroupDTO> listView;
+    private ListView<String> listView = new ListView<>();
 
     /**
      * 点击好友，查看好友列表
@@ -45,34 +48,34 @@ public class ContactsController extends HomeController implements ControllerBase
 
     /**
      * 点击群聊，查看群聊列表
-     * @throws IOException
      */
     @FXML
     protected void onGroupClick() throws IOException{
 
+
+    }
+
+    /**
+     * 点击用户，查看所有用户列表
+     */
+    @FXML
+    protected void onUsersClick() throws IOException{
         try {
-            var response = HttpService.getInstance().get("/group/",  new TypeReference<ResponseDTO<GroupDTO[]>>(){});
+            var response = HttpService.getInstance().get("/user/",  new TypeReference<ResponseDTO<User[]>>(){});
 
             if(response != null){
-                listView = new ListView<>();
-                GroupDTO [] groups = response.getData();
-                ObservableList<GroupDTO> items = FXCollections.observableArrayList();
-                items.addAll(groups);
+
+                User [] users = response.getData();
+//                ObservableList<User> items = FXCollections.observableArrayList();
+//                items.addAll(users);
+//
+//                listView.setItems(items);
+                ObservableList<String> items = FXCollections.observableArrayList("今天", "明天");
+                for(int i = 0; i < users.length; i++){
+                    items.add(users[i].getNickname());
+                }
 
                 listView.setItems(items);
-                listView.setOnMouseClicked(click -> {
-                    if(click.getClickCount() == 2){
-                        GroupDTO selectedItem = listView.getSelectionModel().getSelectedItem();
-                        System.out.println("选到的是: " + selectedItem.getName());
-                    }
-                });
-
-                listView.setCellFactory(param -> new ListCell<GroupDTO>() {
-                    public void updateItem(){
-
-                    }
-                });
-
 
 
             }
@@ -80,14 +83,6 @@ public class ContactsController extends HomeController implements ControllerBase
         } catch (NetworkException e) {
             //待完善
         }
-    }
-
-    /**
-     * 点击用户，查看所有用户列表
-     */
-    @FXML
-    protected void onUsersClick(){
-
     }
 
 
