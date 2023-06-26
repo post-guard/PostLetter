@@ -1,6 +1,6 @@
 package top.rrricardo.postletter.models;
 
-public class User {
+public class User implements OrientationBase{
     private int id;
     private String nickname;
     private String username;
