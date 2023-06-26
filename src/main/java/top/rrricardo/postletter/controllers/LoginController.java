@@ -15,6 +15,7 @@ import top.rrricardo.postletter.exceptions.NetworkException;
 import top.rrricardo.postletter.models.Configuration;
 import top.rrricardo.postletter.models.LoginDTO;
 import top.rrricardo.postletter.models.ResponseDTO;
+import top.rrricardo.postletter.models.ResponseData;
 import top.rrricardo.postletter.services.HttpService;
 import top.rrricardo.postletter.utils.ControllerBase;
 import top.rrricardo.postletter.utils.SceneManager;
@@ -65,17 +66,20 @@ public class LoginController implements ControllerBase{
 
         try {
             var response = HttpService.postBody("http://10.28.243.52:10188/user/login", loginDTO,
-                    new TypeReference<ResponseDTO<String>>() {
+                    new TypeReference<ResponseDTO<ResponseData>>() {
                     });
 
             if (response != null) {
                 label.setText(response.getMessage());
                 label.setTextFill(Color.rgb(20,255,20));
 
-                //如果登录成功，就把token保存到本地
-                if(response.getData().length() != 0){
-                    String token = response.getData();
+                //如果登录成功，就把token和id保存到本地
+                if(response.getData().getToken().length() != 0){
+                    String token = response.getData().getToken();
                     Configuration.getInstance().setToken(token);
+                    int userId = response.getData().getId();
+                    Configuration.getInstance().setId(userId);
+
                     Configuration.writeIntoFile();
                 }
 

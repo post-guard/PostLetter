@@ -10,6 +10,7 @@ import java.nio.charset.Charset;
 
 public class Configuration {
     private String token;
+    private int id;
     private static Configuration configuration = new Configuration();
     private static final ObjectMapper mapper = new ObjectMapper();
     private Configuration(){
@@ -25,6 +26,14 @@ public class Configuration {
         this.token = token;
         //设置令牌
         HttpService.setAuthorizeToken(token, "http://10.28.243.52:10188");
+    }
+
+    public int getId(){
+        return id;
+    }
+
+    public void setId(int id){
+        this.id = id;
     }
 
     /**
