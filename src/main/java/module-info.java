@@ -5,6 +5,7 @@ module top.rrricardo.postletter {
     requires org.jetbrains.annotations;
     requires okhttp3;
     requires com.fasterxml.jackson.databind;
+    requires com.fasterxml.jackson.datatype.jsr310;
 
     opens top.rrricardo.postletter to javafx.fxml;
     exports top.rrricardo.postletter;
