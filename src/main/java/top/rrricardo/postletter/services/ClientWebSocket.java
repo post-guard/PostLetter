@@ -5,17 +5,14 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
+
 import java.util.concurrent.TimeUnit;
 
 public class ClientWebSocket {
 
     private final String url;
-    private WebSocket clientWebSocket;
+    protected WebSocket clientWebSocket;
     private final OkHttpClient client;
-
-    private ScheduledExecutorService timer;
 
     public ClientWebSocket(String url) {
         this.url = url;
@@ -32,10 +29,18 @@ public class ClientWebSocket {
 
     }
 
+    public void action() {
+
+    }
+
+    public void receive(String text) {
+
+    }
 
     public void disconnect(int code, String reason) {
-        if (clientWebSocket != null)
+        if (clientWebSocket != null) {
             clientWebSocket.close(code, reason);
+        }
     }
 
 
@@ -94,7 +99,7 @@ public class ClientWebSocket {
 
             super.onMessage(webSocket, text);
 
-            System.out.println("WebSocket收到服务端信息 "+text);
+            receive(text);
         }
 
 
@@ -105,14 +110,10 @@ public class ClientWebSocket {
 
             clientWebSocket = webSocket;
             System.out.println("WebSocket连接成功 连接到"+"http://10.28.243.52:10188" + url);
-            // 开启心跳
-            Runnable heartBeat = () -> clientWebSocket.send("ping");
 
-            if(timer!=null) {
-                timer.shutdown();
-            }
-            timer = Executors.newSingleThreadScheduledExecutor();
-            timer.scheduleAtFixedRate(heartBeat,5,10,TimeUnit.SECONDS);
+            // 进行对应操作
+            action();
+
         }
 
     }

@@ -11,7 +11,6 @@ import javafx.util.Callback;
 import javafx.util.StringConverter;
 import top.rrricardo.postletter.exceptions.NetworkException;
 import top.rrricardo.postletter.models.*;
-import top.rrricardo.postletter.services.ClientWebSocket;
 import top.rrricardo.postletter.services.HttpService;
 import top.rrricardo.postletter.utils.ControllerBase;
 
@@ -65,9 +64,7 @@ public class MessageController extends HomeController implements ControllerBase 
 
             if(currentUser != null) {
 
-                ClientWebSocket receiveWebSocket = new ClientWebSocket("/websocket/message/" + currentUser.getId());
-
-
+                var webSocketManager = WebSocketManager.getInstance();
 
                 var participantResponse = HttpService.getInstance().get("/participant/user/" + currentUser.getId(),
                         new TypeReference<ResponseDTO<List<Participant>>>() {
@@ -125,15 +122,12 @@ public class MessageController extends HomeController implements ControllerBase 
                         currentSession.getId(), currentUser.getId(),
                             sendTextArea.getText(),localDateTime
                     );
-                    System.out.println(message.getSessionId());
-                    System.out.println(message.getSendId());
-                    System.out.println(message.getText());
-                    System.out.println(message.getSendTime());
+
                     var response = HttpService.getInstance().post("/message/send",message ,
                             new TypeReference<ResponseDTO<Message>>() {});
 
                     if(response != null) {
-                        System.out.println(response);
+                        sendTextArea.setText("");
                     }
                 }
             }
