@@ -16,4 +16,8 @@ public interface OrientationBase {
     default int getFriendId(){
         return 0;
     }
+
+    default int getSessionId() {
+        return 0;
+    }
 }
