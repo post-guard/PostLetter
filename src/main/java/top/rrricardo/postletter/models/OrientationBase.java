@@ -20,4 +20,12 @@ public interface OrientationBase {
     default int getSessionId() {
         return 0;
     }
+
+    default String getName() {
+        return null;
+    }
+
+    default String getDetails() {
+        return null;
+    }
 }

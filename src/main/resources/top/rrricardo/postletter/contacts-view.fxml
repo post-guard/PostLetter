@@ -40,7 +40,7 @@
             </ScrollPane>
             <HBox fx:id="hBox" layoutX="3.0" layoutY="46.0" prefHeight="55.0" prefWidth="223.0" spacing="3.0">
                <children>
-                  <Button fx:id="friendsButton" mnemonicParsing="false" onAction="#onFriendsClick" prefHeight="23.0" prefWidth="70.0" text="好友" />
+                  <Button fx:id="friendsButton" focusTraversable="false" mnemonicParsing="false" onAction="#onFriendsClick" prefHeight="23.0" prefWidth="70.0" text="好友" />
                   <Button fx:id="groupButton" mnemonicParsing="false" onAction="#onGroupClick" prefHeight="23.0" prefWidth="70.0" text="群聊" />
                   <Button fx:id="usersButton" mnemonicParsing="false" onAction="#onUsersClick" prefHeight="23.0" prefWidth="70.0" text="全部用户" />
                </children>
@@ -64,11 +64,11 @@
             <HBox prefHeight="41.0" prefWidth="342.0">
                <children>
                   <Label fx:id="label2a" prefHeight="47.0" prefWidth="78.0" text="username" />
-                  <Label fx:id="label2b" prefHeight="47.0" prefWidth="78.0" text="Label2" />
+                  <Label fx:id="label2b" prefHeight="42.0" prefWidth="250.0" text="Label2" />
                </children>
             </HBox>
-            <Button fx:id="button1" onAction="#clickButton1" mnemonicParsing="false" prefHeight="33.0" prefWidth="128.0" text="添加好友/发消息" />
-            <Button fx:id="button2" onAction="#clickButton2" mnemonicParsing="false" prefHeight="33.0" prefWidth="128.0" text="删除好友/退出群聊" />
+            <Button fx:id="button1" mnemonicParsing="false" onAction="#clickButton1" prefHeight="33.0" prefWidth="128.0" text="添加好友/发消息" />
+            <Button fx:id="button2" mnemonicParsing="false" onAction="#clickButton2" prefHeight="33.0" prefWidth="128.0" text="删除好友/退出群聊" />
             <MenuButton fx:id="button3" alignment="CENTER" mnemonicParsing="false" prefHeight="33.0" prefWidth="128.0" text="拉人入群">
               <items>
                 <MenuItem mnemonicParsing="false" text="Action 1" />
@@ -77,5 +77,6 @@
             </MenuButton>
          </children>
       </VBox>
+      <Button layoutX="710.0" layoutY="29.0" mnemonicParsing="false" text="创建群聊" />
    </children>
 </AnchorPane>

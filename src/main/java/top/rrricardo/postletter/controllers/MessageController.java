@@ -65,7 +65,7 @@ public class MessageController extends HomeController implements ControllerBase 
 
             if(currentUser != null) {
 
-                ClientWebSocket receiveWebSocket = new ClientWebSocket("/websocket/message/" + currentUser.getId());
+                //ClientWebSocket receiveWebSocket = new ClientWebSocket("/websocket/message/" + currentUser.getId());
 
 
 

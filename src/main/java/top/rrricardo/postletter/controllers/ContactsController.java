@@ -17,6 +17,7 @@ import top.rrricardo.postletter.exceptions.NetworkException;
 import top.rrricardo.postletter.models.*;
 import top.rrricardo.postletter.services.HttpService;
 import top.rrricardo.postletter.utils.ControllerBase;
+import top.rrricardo.postletter.utils.SceneManager;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -67,12 +68,11 @@ public class ContactsController extends HomeController implements ControllerBase
         state = 1;
         //清除原有列表
         listView.getItems().clear();
-        //限制按钮点击
-        friendsButton.setDisable(true);
-        groupButton.setDisable(false);
-        usersButton.setDisable(false);
         //清除右半区
         emptyRightArea();
+        friendsButton.setStyle("-fx-border-color: #ffffff");
+        groupButton.setStyle("-fx-border-color: #ffffff");
+        groupButton.setStyle("-fx-border-color: #ffffff");
 
         try {
             var response = HttpService.getInstance().get("/friend/" + "?userId=" + Configuration.getInstance().getId(), new TypeReference<ResponseDTO<Friend[]>>() {
@@ -126,8 +126,24 @@ public class ContactsController extends HomeController implements ControllerBase
                         }
                         //被点击的必定是Group列表里的Item
                         else if(newItem.getNickname() == null && newItem.getFriendId() == 0){
-                            //待完善
-                            System.out.println("这是group!");
+                            circle.setVisible(true);
+                            circleLabel.setText(String.valueOf(newItem.getName().charAt(0))); //头像只显示第一个字符
+                            circleLabel.setStyle("-fx-text-fill: white");
+                            label1a.setText("群名称");
+                            label1b.setText(newItem.getName());
+                            label2a.setText("详情");
+                            label2b.setText(newItem.getDetails());
+
+                            button1.setVisible(true);
+                            button1.setDisable(false);
+                            button1.setText("发消息");
+                            button2.setVisible(true);
+                            button2.setDisable(false);
+                            button2.setText("退出群聊");
+                            button3.setVisible(true);
+                            button3.setDisable(false);
+                            button3.setText("邀请好友进群");
+
                         }
                         //被点击的必定是User列表里的Item
                         else {
@@ -232,12 +248,11 @@ public class ContactsController extends HomeController implements ControllerBase
         state = 1;
         //清除原有列表
         listView.getItems().clear();
-        //限制按钮点击
-        friendsButton.setDisable(true);
-        groupButton.setDisable(false);
-        usersButton.setDisable(false);
         //清除右半区
         emptyRightArea();
+        friendsButton.setStyle("-fx-border-color: #512cb9");
+        groupButton.setStyle("-fx-border-color: #ffffff");
+        usersButton.setStyle("-fx-border-color: #ffffff");
 
         try {
             var response = HttpService.getInstance().get("/friend/" + "?userId=" + Configuration.getInstance().getId(), new TypeReference<ResponseDTO<Friend[]>>() {
@@ -257,7 +272,7 @@ public class ContactsController extends HomeController implements ControllerBase
 
             }
         }catch (NetworkException | IOException e){
-            return;
+            System.out.println("Friend列表加载失败");
         }
 
     }
@@ -265,9 +280,9 @@ public class ContactsController extends HomeController implements ControllerBase
     /**
      * 群聊的单元格显示
      */
-    private static class GroupCell extends ListCell<GroupDTO>{
+    private static class GroupCell extends ListCell<OrientationBase>{
         @Override
-        protected void updateItem(GroupDTO groupDTO, boolean b) {
+        protected void updateItem(OrientationBase groupDTO, boolean b) {
             super.updateItem(groupDTO, b);
 
             if(groupDTO == null){
@@ -281,17 +296,48 @@ public class ContactsController extends HomeController implements ControllerBase
      * 点击群聊，查看群聊列表
      */
     @FXML
-    protected void onGroupClick() throws IOException{
+    protected void onGroupClick(){
         //设置状态变量为2
         state = 2;
         //清除原有列表
         listView.getItems().clear();
-        //限制按钮点击
-        friendsButton.setDisable(false);
-        groupButton.setDisable(true);
-        usersButton.setDisable(false);
         //清除右半区
         emptyRightArea();
+        friendsButton.setStyle("-fx-border-color: #ffffff");
+        groupButton.setStyle("-fx-border-color: #512cb9");
+        usersButton.setStyle("-fx-border-color: #ffffff");
+
+        try {
+            var response = HttpService.getInstance().get("/participant/user/" + Configuration.getInstance().getId() , new TypeReference<ResponseDTO<Participant[]>>(){});
+            if(response != null){
+                Participant [] participants = response.getData();
+                var response1 = HttpService.getInstance().get("/group/" , new TypeReference<ResponseDTO<GroupDTO[]>>(){});
+                if(response1 != null){
+                    GroupDTO[] groups = response1.getData();
+                    ObservableList<OrientationBase> items = FXCollections.observableArrayList();
+                    //找出当前用户参加的所有群聊
+                    for(Participant participant: participants)
+                        for (GroupDTO group : groups) {
+                            if (participant.getSessionId() == group.getSessionId()) {
+                                items.add(group);
+                            }
+                        }
+
+                    if(items.size() > 0){
+                        listView.setItems(items);
+                        listView.setCellFactory(new Callback<>() {
+                            @Override
+                            public ListCell<OrientationBase> call(ListView<OrientationBase> orientationBaseListView) {
+                                return new GroupCell();
+                            }
+                        });
+                    }
+
+                }
+            }
+        }catch (NetworkException | IOException e){
+            System.out.println("群聊列表加载失败");
+        }
 
     }
 
@@ -323,12 +369,11 @@ public class ContactsController extends HomeController implements ControllerBase
         state = 3;
         //清除原有列表
         listView.getItems().clear();
-        //限制按钮点击
-        friendsButton.setDisable(false);
-        groupButton.setDisable(false);
-        usersButton.setDisable(true);
         //清除右半区
         emptyRightArea();
+        friendsButton.setStyle("-fx-border-color: #ffffff");
+        groupButton.setStyle("-fx-border-color: #ffffff");
+        usersButton.setStyle("-fx-border-color: #512cb9");
 
         try {
             var response = HttpService.getInstance().get("/user/",  new TypeReference<ResponseDTO<User[]>>(){});
@@ -355,7 +400,7 @@ public class ContactsController extends HomeController implements ControllerBase
 
 
     @FXML
-    protected void clickButton1(){
+    protected void clickButton1() throws IOException {
         //没有第二个按钮，那么选中的Item一定是User，且不是好友，button1的功能为添加好友
         if(!button2.isVisible()) {
             //弹窗：是否添加好友？
@@ -384,7 +429,7 @@ public class ContactsController extends HomeController implements ControllerBase
         }
         //有第二个按钮，button1的功能必定是跳转到发消息界面
         else {
-
+            onMessageClick();
         }
 
     }
@@ -394,21 +439,57 @@ public class ContactsController extends HomeController implements ControllerBase
     protected void clickButton2(){
         //如果是群聊列表，button2的功能是退出群聊
         if(state == 2){
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setHeaderText("是否退出该群聊？");
+            Optional<ButtonType> result1 = alert.showAndWait();
+            if(result1.isPresent()){
+                ButtonType buttonType = result1.get();
+                //确定退群
+                if(buttonType == ButtonType.OK){
+                    try {
+                        var response = HttpService.getInstance().get("/participant/user/" + Configuration.getInstance().getId() , new TypeReference<ResponseDTO<Participant[]>>(){});
+                        if(response != null){
+                            Participant [] participants = response.getData();
+                            for(Participant participant: participants){
+                                if(participant.getSessionId() == selectedItem.getSessionId()){
+                                    var response1 = HttpService.getInstance().delete("/participant/" + participant.getId(), new TypeReference<ResponseDTO<Participant>>() {
+                                    });
+                                    if(response1 != null){
+                                        Alert alert1 = new Alert(Alert.AlertType.INFORMATION);
+                                        alert1.setHeaderText("退出群聊成功");
+                                        alert1.show();
+                                        onGroupClick(); //刷新群聊列表
+                                    }
+                                    break;
+                                }
+                            }
+                        }
+                    }catch (NetworkException | IOException e){
+                        System.out.println("退群失败");
+                    }
+                }
+            }
 
         }
         //否则，button2的功能只能是删除好友
         else {
             //弹窗：是否删除好友？
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setHeaderText("是否删除该好友？");
-            Optional<ButtonType> result = alert.showAndWait();
+            Alert alert1 = new Alert(Alert.AlertType.CONFIRMATION);
+            alert1.setHeaderText("是否删除该好友？");
+            Optional<ButtonType> result = alert1.showAndWait();
             if(result.isPresent()){
                 ButtonType buttonType = result.get();
                 //确定删除好友
                 if(buttonType == ButtonType.OK){
                     try {
-                        var response = HttpService.getInstance().delete("/friend/" + selectedItem.getFriendId(), new TypeReference<ResponseDTO<Friend>>() {
+                        var response = HttpService.getInstance().delete("/friend/" + selectedItem.getId(), new TypeReference<ResponseDTO<Friend>>() {
                         });
+                        if(response != null){
+                            Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
+                            alert2.setHeaderText("删除成功");
+                            alert2.show();
+                            onFriendsClick();   //刷新好友列表
+                        }
                     }catch (NetworkException | IOException e){
                         System.out.println("删除失败");
                     }
