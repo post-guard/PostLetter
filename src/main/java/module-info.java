@@ -6,6 +6,9 @@ module top.rrricardo.postletter {
     requires okhttp3;
     requires com.fasterxml.jackson.databind;
     requires com.fasterxml.jackson.datatype.jsr310;
+    requires opencv;
+    requires java.desktop;
+    requires javafx.swing;
 
     opens top.rrricardo.postletter to javafx.fxml;
     exports top.rrricardo.postletter;
