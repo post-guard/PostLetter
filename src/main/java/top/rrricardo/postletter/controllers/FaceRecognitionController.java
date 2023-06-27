@@ -12,11 +12,13 @@ import org.opencv.core.Mat;
 import org.opencv.core.MatOfFloat;
 import org.opencv.core.MatOfInt;
 import org.opencv.core.MatOfRect;
+import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 import org.opencv.objdetect.CascadeClassifier;
 import org.opencv.videoio.VideoCapture;
 import top.rrricardo.postletter.PostLetter;
 import top.rrricardo.postletter.utils.ControllerBase;
+import top.rrricardo.postletter.utils.SceneManager;
 
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
@@ -35,24 +37,21 @@ public class FaceRecognitionController implements ControllerBase{
 
     private final VideoCapture videoCapture = new VideoCapture();
     private static final CascadeClassifier faceClassifier = new CascadeClassifier(
-            PostLetter.class.getResource("haarcascade_frontalface_alt2.xml").getPath());
+            PostLetter.class.getResource("haarcascade_frontalface_default.xml").getPath());
 
     private ScheduledExecutorService executor;
     private boolean isCameraOpen;
 
     /**
      * 点击返回，回到账号密码登录页面
-     * @throws IOException
      */
     @FXML
-    protected void onReturnClick() throws IOException{
-
+    protected void onReturnClick() throws IOException {
+        SceneManager.replaceScene("log-view.fxml", 390, 430, "登录");
     }
 
     @FXML
     protected void onOpenCameraClick() {
-
-        System.out.println(PostLetter.class.getResource("haarcascade_frontalface_alt2.xml").getPath());
         if (isCameraOpen) {
             isCameraOpen = false;
 
@@ -65,16 +64,51 @@ public class FaceRecognitionController implements ControllerBase{
             if (videoCapture.isOpened()) {
                 isCameraOpen = true;
 
-                executor = Executors.newSingleThreadScheduledExecutor();
+                /*executor = Executors.newSingleThreadScheduledExecutor();
                 executor.scheduleAtFixedRate(() -> {
                     var frame = getFrame();
+                    var face = getFaceInImage(frame);
+
+                    if (face == null) {
+                        System.out.println("获得脸部失败");
+                    } else {
+                        frame = face;
+                        System.out.println("获得脸部成功");
+                    }
                     var image = mat2Image(frame);
+
+                    var test = Imgcodecs.imread("test.png");
+
 
                     if (image != null) {
                         Platform.runLater(() -> screen.setImage(image));
                     }
 
-                }, 0, 33, TimeUnit.MILLISECONDS);
+                }, 0, 33, TimeUnit.MILLISECONDS);*/
+                var thread = new Thread(() -> {
+                    var frame = getFrame();
+                    var image = mat2Image(frame);
+
+                    if (image != null) {
+                        Image finalImage = image;
+                        Platform.runLater(() -> screen.setImage(finalImage));
+                    }
+
+                    System.out.println("尝试获得脸部");
+                    var face = getFaceInImage(frame);
+
+                    if (face != null) {
+                        image = mat2Image(face);
+                        if (image != null) {
+                            Image finalImage1 = image;
+                            Platform.runLater(() -> screen.setImage(finalImage1));
+                        }
+                    } else {
+                        System.out.println("获得脸部失败");
+                    }
+                });
+
+                thread.start();
             } else {
                 System.out.println("Open camera failed!");
             }
@@ -119,8 +153,12 @@ public class FaceRecognitionController implements ControllerBase{
     }
 
     @Nullable
-    private static Image mat2Image(Mat frame) {
-        BufferedImage image = null;
+    private static Image mat2Image(@Nullable Mat frame) {
+        if (frame == null) {
+            return null;
+        }
+
+        BufferedImage image;
         var width = frame.width();
         var height = frame.height();
         var channels = frame.channels();
@@ -171,7 +209,7 @@ public class FaceRecognitionController implements ControllerBase{
 
         Mat face = null;
         for (var rect : faceRect.toArray()) {
-            face = new Mat(output, rect);
+            face = new Mat(input, rect);
         }
 
         return face;
