@@ -4,9 +4,7 @@ import top.rrricardo.postletter.services.ClientWebSocket;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+
 
 public class WebSocketManager {
     private WebSocketManager() {
@@ -29,47 +27,17 @@ public class WebSocketManager {
         webSocketList.add(webSocketHeartBeat);
     }
 
+    /**
+     * 关闭列表里的全部WebSocket连接,并清空列表
+     */
     public void closeAll() {
-        for(ClientWebSocket webSocket : webSocketList) {
-            webSocket.state = "disconnect";
-            webSocket.disconnect(1000,"用户下线");
+        for (ClientWebSocket webSocket : webSocketList) {
+            webSocket.state = "disconnected";
+            webSocket.disconnect(1000, "用户下线");
         }
         webSocketList.clear();
     }
 
 }
 
-class WebSocketMessage extends ClientWebSocket {
 
-    public WebSocketMessage(String url) {
-        super(url);
-    }
-
-    @Override
-    public void receive(String text) {
-        super.receive(text);
-        System.out.println("WebSocket收到服务端信息 "+text);
-    }
-}
-
-
-class WebSocketHeartBeat extends ClientWebSocket {
-
-    private ScheduledExecutorService timer;
-
-    public WebSocketHeartBeat(String url) {
-        super(url);
-    }
-
-    @Override
-    public void action() {
-        super.action();
-        Runnable heartBeat = () -> clientWebSocket.send("ping");
-
-        if(timer!=null) {
-            timer.shutdown();
-        }
-        timer = Executors.newSingleThreadScheduledExecutor();
-        timer.scheduleAtFixedRate(heartBeat,5,10, TimeUnit.SECONDS);
-    }
-}

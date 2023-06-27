@@ -43,7 +43,7 @@ public class ClientWebSocket {
     public void disconnect(int code, String reason) {
         if (clientWebSocket != null) {
             clientWebSocket.close(code, reason);
-            state = "disconnect";
+            state = "disconnected";
         }
     }
 
@@ -91,10 +91,10 @@ public class ClientWebSocket {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            if(Objects.equals(state, "connect")) {
+            if(Objects.equals(state, "connected")) {
                 System.out.println("开始重连");
                 connect();
-            } else if(Objects.equals(state, "disconnect")) {
+            } else if(Objects.equals(state, "disconnected")) {
                 disconnect(1001,"用户下线");
             }
 
