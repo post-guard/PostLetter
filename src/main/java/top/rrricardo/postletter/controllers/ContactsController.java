@@ -19,6 +19,7 @@ import top.rrricardo.postletter.services.HttpService;
 import top.rrricardo.postletter.utils.ControllerBase;
 
 import java.io.IOException;
+import java.util.Optional;
 
 
 public class ContactsController extends HomeController implements ControllerBase{
@@ -34,21 +35,27 @@ public class ContactsController extends HomeController implements ControllerBase
     @FXML
     private ListView<OrientationBase> listView = new ListView<>();
     @FXML
-    Circle circle;
+    private Circle circle;
     @FXML
-    Label circleLabel;
+    private Label circleLabel;
     @FXML
-    Label label1a;
+    private Label label1a;
     @FXML
-    Label label1b;
+    private Label label1b;
     @FXML
-    Label label2a;
+    private Label label2a;
     @FXML
-    Label label2b;
+    private Label label2b;
     @FXML
-    Button button1;
+    private Button button1;
     @FXML
-    Button button2;
+    private Button button2;
+    @FXML
+    private MenuButton button3; //只会用于群聊拉好友
+    /**
+     * 保存当前被选中的条目的id
+     */
+    private OrientationBase selectedItem;
 
     /**
      * 进入联系人列表，自动加载出好友列表
@@ -89,7 +96,7 @@ public class ContactsController extends HomeController implements ControllerBase
                         if(newItem == null){
                             return;
                         }
-
+                        selectedItem = newItem;
                         //被点击的必定是Friend列表里的Item
                         if(newItem.getNickname() == null && newItem.getFriendId() != 0){
                             try {
@@ -106,8 +113,9 @@ public class ContactsController extends HomeController implements ControllerBase
                                     label2a.setText("账号");
                                     label2b.setText(tempUser.getUsername());
 
-                                    button1.setVisible(false);
-                                    button1.setDisable(true);
+                                    button1.setVisible(true);
+                                    button1.setDisable(false);
+                                    button1.setText("发消息");
                                     button2.setVisible(true);
                                     button2.setDisable(false);
                                     button2.setText("删除好友");    //只有删除好友按钮
@@ -139,10 +147,11 @@ public class ContactsController extends HomeController implements ControllerBase
                                     //遍历好友列表
                                     int i;
                                     for(i = 0; i < friends.length; i++){
-                                        //是好友，只提供删除好友按钮
+                                        //是好友
                                         if(friends[i].getFriendId() == newItem.getId()){
-                                            button1.setVisible(false);
-                                            button1.setDisable(true);
+                                            button1.setVisible(true);
+                                            button1.setDisable(false);
+                                            button1.setText("发消息");
                                             button2.setVisible(true);
                                             button2.setDisable(false);
                                             button2.setText("删除好友");
@@ -185,6 +194,8 @@ public class ContactsController extends HomeController implements ControllerBase
         button1.setVisible(false);
         button2.setDisable(true);
         button2.setVisible(false);
+        button3.setDisable(true);
+        button3.setVisible(false);
     }
 
     /**
@@ -340,6 +351,80 @@ public class ContactsController extends HomeController implements ControllerBase
         } catch (NetworkException e) {
             return;
         }
+    }
+
+
+    @FXML
+    protected void clickButton1(){
+        //没有第二个按钮，那么选中的Item一定是User，且不是好友，button1的功能为添加好友
+        if(!button2.isVisible()) {
+            //弹窗：是否添加好友？
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setHeaderText("是否添加该用户为好友？");
+            Optional<ButtonType> result = alert.showAndWait();
+            if(result.isPresent()){
+                ButtonType buttonType = result.get();
+                //确定添加好友
+                if(buttonType == ButtonType.OK){
+                    try {
+                        Friend friend = new Friend(Configuration.getInstance().getId(), selectedItem.getId());
+                        var response = HttpService.getInstance().post("/friend/", friend, new TypeReference<ResponseDTO<Friend>>() {
+                        });
+
+                        if(response != null){
+                            Alert alert1 = new Alert(Alert.AlertType.INFORMATION);
+                            alert1.setHeaderText("已发起好友申请");
+                            alert1.show();
+                        }
+                    }catch (NetworkException | IOException e){
+                        System.out.println("添加失败");
+                    }
+                }
+            }
+        }
+        //有第二个按钮，button1的功能必定是跳转到发消息界面
+        else {
+
+        }
+
+    }
+
+
+    @FXML
+    protected void clickButton2(){
+        //如果是群聊列表，button2的功能是退出群聊
+        if(state == 2){
+
+        }
+        //否则，button2的功能只能是删除好友
+        else {
+            //弹窗：是否删除好友？
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setHeaderText("是否删除该好友？");
+            Optional<ButtonType> result = alert.showAndWait();
+            if(result.isPresent()){
+                ButtonType buttonType = result.get();
+                //确定删除好友
+                if(buttonType == ButtonType.OK){
+                    try {
+                        var response = HttpService.getInstance().delete("/friend/" + selectedItem.getFriendId(), new TypeReference<ResponseDTO<Friend>>() {
+                        });
+                    }catch (NetworkException | IOException e){
+                        System.out.println("删除失败");
+                    }
+                }
+            }
+        }
+
+
+    }
+
+    /**
+     * 只有点击群聊列表的Item后，才会该按钮
+     * 只用于拉好友入群
+     */
+    protected void clickButton3(){
+
     }
 
 
