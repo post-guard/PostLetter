@@ -64,8 +64,6 @@ public class MessageController extends HomeController implements ControllerBase 
 
             if(currentUser != null) {
 
-                var webSocketManager = WebSocketManager.getInstance();
-
                 var participantResponse = HttpService.getInstance().get("/participant/user/" + currentUser.getId(),
                         new TypeReference<ResponseDTO<List<Participant>>>() {
                 });

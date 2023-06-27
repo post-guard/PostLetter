@@ -5,7 +5,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 
-
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 public class ClientWebSocket {
@@ -14,8 +14,11 @@ public class ClientWebSocket {
     protected WebSocket clientWebSocket;
     private final OkHttpClient client;
 
+    public String state;
+
     public ClientWebSocket(String url) {
         this.url = url;
+        this.state = "disconnected";
         client = new OkHttpClient().newBuilder().pingInterval(10, TimeUnit.SECONDS).build();
         connect();
     }
@@ -40,13 +43,13 @@ public class ClientWebSocket {
     public void disconnect(int code, String reason) {
         if (clientWebSocket != null) {
             clientWebSocket.close(code, reason);
+            state = "disconnect";
         }
     }
 
 
     public void send(final String message) {
         if (clientWebSocket != null) {
-
             clientWebSocket.send(message);
         }
     }
@@ -88,8 +91,13 @@ public class ClientWebSocket {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            System.out.println("开始重连");
-            connect();
+            if(Objects.equals(state, "connect")) {
+                System.out.println("开始重连");
+                connect();
+            } else if(Objects.equals(state, "disconnect")) {
+                disconnect(1001,"用户下线");
+            }
+
         }
 
 
@@ -110,7 +118,7 @@ public class ClientWebSocket {
 
             clientWebSocket = webSocket;
             System.out.println("WebSocket连接成功 连接到"+"http://10.28.243.52:10188" + url);
-
+            state = "connected";
             // 进行对应操作
             action();
 

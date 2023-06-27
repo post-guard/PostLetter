@@ -11,14 +11,9 @@ import java.util.concurrent.TimeUnit;
 public class WebSocketManager {
     private WebSocketManager() {
         webSocketList = new ArrayList<>();
-
-        WebSocketMessage webSocketMessage = new WebSocketMessage("/websocket/message/" + Configuration.getInstance().getId());
-        WebSocketHeartBeat webSocketHeartBeat = new WebSocketHeartBeat("/websocket/heartbeat/" + Configuration.getInstance().getId());
-        webSocketList.add(webSocketMessage);
-        webSocketList.add(webSocketHeartBeat);
     }
 
-    private static WebSocketManager webSocketManager = new WebSocketManager();
+    private static final WebSocketManager webSocketManager = new WebSocketManager();
 
     public static WebSocketManager getInstance() {
         return webSocketManager;
@@ -26,10 +21,20 @@ public class WebSocketManager {
 
     public static List<ClientWebSocket> webSocketList;
 
+    public void init() {
+
+        WebSocketMessage webSocketMessage = new WebSocketMessage("/websocket/message/" + Configuration.getInstance().getId());
+        WebSocketHeartBeat webSocketHeartBeat = new WebSocketHeartBeat("/websocket/heartbeat/" + Configuration.getInstance().getId());
+        webSocketList.add(webSocketMessage);
+        webSocketList.add(webSocketHeartBeat);
+    }
+
     public void closeAll() {
         for(ClientWebSocket webSocket : webSocketList) {
+            webSocket.state = "disconnect";
             webSocket.disconnect(1000,"用户下线");
         }
+        webSocketList.clear();
     }
 
 }
