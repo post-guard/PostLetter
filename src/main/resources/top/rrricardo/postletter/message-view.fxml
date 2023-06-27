@@ -32,8 +32,8 @@
       <AnchorPane layoutX="337.0" layoutY="10.0" prefHeight="579.0" prefWidth="457.0">
          <children>
             <ListView layoutX="5.0" layoutY="73.0" prefHeight="334.0" prefWidth="457.0" AnchorPane.bottomAnchor="175.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="70.0" />
-            <TextArea layoutY="404.0" prefHeight="130.0" prefWidth="457.0" promptText="无气凡你妈biss" wrapText="true" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="404.0" />
-            <Button layoutX="379.0" layoutY="540.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="70.0" text="发送" />
+            <TextArea fx:id="sendTextArea"  layoutY="404.0" prefHeight="130.0" prefWidth="457.0" promptText="无气凡你妈biss" wrapText="true" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="404.0" />
+            <Button fx:id="sendButton" layoutX="379.0" layoutY="540.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="70.0" text="发送" onAction="#onSendButtonClick"/>
             <Label fx:id="sessionLabelName" layoutX="14.0" layoutY="21.0" prefHeight="31.0" prefWidth="227.0" text="test">
                <font>
                   <Font size="16.0" />

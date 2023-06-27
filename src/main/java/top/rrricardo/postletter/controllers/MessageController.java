@@ -5,21 +5,19 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldListCell;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
 import top.rrricardo.postletter.exceptions.NetworkException;
-import top.rrricardo.postletter.models.ResponseDTO;
-import top.rrricardo.postletter.models.Session;
+import top.rrricardo.postletter.models.*;
 import top.rrricardo.postletter.services.HttpService;
 import top.rrricardo.postletter.utils.ControllerBase;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 public class MessageController extends HomeController implements ControllerBase {
 
@@ -32,6 +30,12 @@ public class MessageController extends HomeController implements ControllerBase 
     private Label sessionLabelLevel;
     @FXML
     private ListView<Session> sessionListView = new ListView<>();
+    @FXML
+    private TextArea sendTextArea;
+
+    private Session currentSession;
+
+    private User currentUser;
 
     private final Callback<ListView<Session>, ListCell<Session>> call = TextFieldListCell.forListView(new StringConverter<>() {
 
@@ -50,30 +54,86 @@ public class MessageController extends HomeController implements ControllerBase 
 
     public void open() {
         try {
-            var response = HttpService.getInstance().get("/session/", new TypeReference<ResponseDTO<List<Session>>>() {
+
+            var userResponse = HttpService.getInstance().get("/user/" + Configuration.getInstance().getId(), new TypeReference<ResponseDTO<User>>() {
             });
-            System.out.println(response);
-            if (response != null) {
-
-                List<Session> sessions = response.getData();
-
-                ObservableList<Session> items = FXCollections.observableArrayList();
-
-                items.addAll(sessions);
-
-                sessionListView.setItems(items);
-                sessionListView.setCellFactory(call);
-                sessionListView.getSelectionModel().selectedItemProperty().addListener(
-                        (ObservableValue<? extends Session> ov, Session old_val,
-                         Session new_val) -> {
-
-                            sessionLabelName.setText(new_val.getName());
-                            sessionLabelLevel.setText("Lv." + new_val.getLevel());
-                        });
+            if(userResponse != null) {
+                currentUser = userResponse.getData();
             }
+
+            if(currentUser != null) {
+                var participantResponse = HttpService.getInstance().get("/participant/user/" + currentUser.getId(),
+                        new TypeReference<ResponseDTO<List<Participant>>>() {
+                });
+                if (participantResponse != null) {
+
+                    ObservableList<Session> items = FXCollections.observableArrayList();
+
+                    for(int i = 0 ;i < participantResponse.getData().size(); i++) {
+                        var sessionResponse = HttpService.getInstance().get("/session/"
+                                        + participantResponse.getData().get(i).getSessionId(),
+                                new TypeReference<ResponseDTO<Session>>() {
+                                });
+                        if(sessionResponse != null) {
+                            items.add(sessionResponse.getData());
+                        }
+                    }
+
+                    sessionListView.setItems(items);
+                    sessionListView.setCellFactory(call);
+                }
+            }
+
         } catch (NetworkException | IOException e) {
             System.out.println("获取会话列表失败");
+        } finally {
+            sendButton.setDisable(true);
+
+            sessionListView.getSelectionModel().selectedItemProperty().addListener(
+                    (ObservableValue<? extends Session> ov, Session old_val,
+                     Session new_val) -> {
+                        currentSession = new_val;
+                        sessionLabelName.setText(new_val.getName());
+                        sessionLabelLevel.setText("Lv." + new_val.getLevel());
+                    });
+
+            sendTextArea.textProperty().addListener((observable, oldValue, newValue) -> {
+                sendButton.setDisable(Objects.equals(sendTextArea.getText(), ""));
+            });
         }
     }
 
+    @FXML
+    protected void onSendButtonClick() throws IOException{
+
+        try {
+            if(currentSession != null){
+
+                var sessionResponse = HttpService.getInstance().get("/session/"
+                                    + currentSession.getId(),
+                        new TypeReference<ResponseDTO<Session>>() {});
+                if(sessionResponse != null) {
+
+                    LocalDateTime localDateTime = LocalDateTime.now();
+                    var message = new Message(
+                        currentSession.getId(), currentUser.getId(),
+                            sendTextArea.getText(),localDateTime
+                    );
+                    System.out.println(message.getSessionId());
+                    System.out.println(message.getSendId());
+                    System.out.println(message.getText());
+                    System.out.println(message.getSendTime());
+                    var response = HttpService.getInstance().post("/message/send",message ,
+                            new TypeReference<ResponseDTO<Message>>() {});
+
+                    if(response != null) {
+                        System.out.println(response);
+                    }
+                }
+            }
+        } catch (NetworkException e) {
+            e.printStackTrace();
+            System.out.println("发送消息失败");
+        }
+    }
 }
