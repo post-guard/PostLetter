@@ -11,6 +11,7 @@ import javafx.util.Callback;
 import javafx.util.StringConverter;
 import top.rrricardo.postletter.exceptions.NetworkException;
 import top.rrricardo.postletter.models.*;
+import top.rrricardo.postletter.services.ClientWebSocket;
 import top.rrricardo.postletter.services.HttpService;
 import top.rrricardo.postletter.utils.ControllerBase;
 
@@ -33,7 +34,7 @@ public class MessageController extends HomeController implements ControllerBase 
     @FXML
     private TextArea sendTextArea;
 
-    private Session currentSession;
+    private static Session currentSession;
 
     private User currentUser;
 
@@ -55,6 +56,7 @@ public class MessageController extends HomeController implements ControllerBase 
     public void open() {
         try {
 
+
             var userResponse = HttpService.getInstance().get("/user/" + Configuration.getInstance().getId(), new TypeReference<ResponseDTO<User>>() {
             });
             if(userResponse != null) {
@@ -62,6 +64,11 @@ public class MessageController extends HomeController implements ControllerBase 
             }
 
             if(currentUser != null) {
+
+                ClientWebSocket receiveWebSocket = new ClientWebSocket("/websocket/message/" + currentUser.getId());
+
+
+
                 var participantResponse = HttpService.getInstance().get("/participant/user/" + currentUser.getId(),
                         new TypeReference<ResponseDTO<List<Participant>>>() {
                 });
@@ -97,9 +104,8 @@ public class MessageController extends HomeController implements ControllerBase 
                         sessionLabelLevel.setText("Lv." + new_val.getLevel());
                     });
 
-            sendTextArea.textProperty().addListener((observable, oldValue, newValue) -> {
-                sendButton.setDisable(Objects.equals(sendTextArea.getText(), ""));
-            });
+            sendTextArea.textProperty().addListener((observable, oldValue, newValue) ->
+                    sendButton.setDisable(Objects.equals(sendTextArea.getText(), "")));
         }
     }
 
