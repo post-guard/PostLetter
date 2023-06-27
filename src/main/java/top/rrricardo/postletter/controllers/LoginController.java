@@ -98,7 +98,7 @@ public class LoginController implements ControllerBase{
      */
     @FXML
     protected void onFaceRecognitionClick() throws IOException{
-        SceneManager.createScene("faceRecognition-view.fxml", 390, 430, "刷脸登录");
+        SceneManager.createScene("face-recognition-view.fxml", 390, 430, "刷脸登录");
     }
 
 
