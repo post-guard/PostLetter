@@ -7,6 +7,7 @@ import top.rrricardo.postletter.exceptions.NetworkException;
 import top.rrricardo.postletter.models.Configuration;
 import top.rrricardo.postletter.models.ResponseDTO;
 import top.rrricardo.postletter.models.User;
+import top.rrricardo.postletter.models.WebSocketManager;
 import top.rrricardo.postletter.services.HttpService;
 import top.rrricardo.postletter.utils.SceneManager;
 
@@ -38,6 +39,7 @@ public class PostLetter extends Application {
 
                 //token还有效，无需登录，直接进入主页
                 if (response != null) {
+                    WebSocketManager.getInstance().init();
                     SceneManager.createScene("message-view.fxml", 800, 600, "主页");
                 }
 

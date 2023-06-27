@@ -1,9 +1,7 @@
 package top.rrricardo.postletter.controllers;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -12,10 +10,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import top.rrricardo.postletter.exceptions.NetworkException;
-import top.rrricardo.postletter.models.Configuration;
-import top.rrricardo.postletter.models.LoginDTO;
-import top.rrricardo.postletter.models.ResponseDTO;
-import top.rrricardo.postletter.models.ResponseData;
+import top.rrricardo.postletter.models.*;
 import top.rrricardo.postletter.services.HttpService;
 import top.rrricardo.postletter.utils.ControllerBase;
 import top.rrricardo.postletter.utils.SceneManager;
@@ -84,6 +79,7 @@ public class LoginController implements ControllerBase{
                 }
 
                 //登录成功后，显示消息界面
+                WebSocketManager.getInstance().init();
                 SceneManager.createScene("message-view.fxml", 800, 600, "主页");
                 label.setText("");
             }
@@ -98,7 +94,7 @@ public class LoginController implements ControllerBase{
      */
     @FXML
     protected void onFaceRecognitionClick() throws IOException{
-        SceneManager.createScene("face-recognition-view.fxml", 390, 430, "刷脸登录");
+        SceneManager.createScene("face-recognition-view.fxml", 600, 800, "刷脸登录");
     }
 
 
