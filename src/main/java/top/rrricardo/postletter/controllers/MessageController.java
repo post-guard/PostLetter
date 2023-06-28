@@ -31,13 +31,15 @@ public class MessageController extends HomeController implements ControllerBase 
     @FXML
     private ListView<Session> sessionListView = new ListView<>();
     @FXML
+    private ListView<Message> messageListView = new ListView<>();
+    @FXML
     private TextArea sendTextArea;
 
     private static Session currentSession;
 
     private User currentUser;
 
-    private final Callback<ListView<Session>, ListCell<Session>> call = TextFieldListCell.forListView(new StringConverter<>() {
+    private final Callback<ListView<Session>, ListCell<Session>> sessionCallback = TextFieldListCell.forListView(new StringConverter<>() {
 
         @Override
         public String toString(Session object) {
@@ -82,7 +84,7 @@ public class MessageController extends HomeController implements ControllerBase 
                     }
 
                     sessionListView.setItems(items);
-                    sessionListView.setCellFactory(call);
+                    sessionListView.setCellFactory(sessionCallback);
                 }
             }
 
@@ -126,6 +128,7 @@ public class MessageController extends HomeController implements ControllerBase 
 
                     if(response != null) {
                         sendTextArea.setText("");
+                        // 如果消息能正常发送，清空输入框
                     }
                 }
             }
@@ -134,4 +137,24 @@ public class MessageController extends HomeController implements ControllerBase 
             System.out.println("发送消息失败");
         }
     }
+
+    /**
+     * 更新聊天窗口的列表
+     * 若sessionId为空,则列表显示为空;若为一个正确的session值,则显示这个会话的聊天信息
+     * @param sessionId 可以为空，也可以为会话的session id
+     */
+    private void updateMessageListView(int... sessionId) {
+
+        ObservableList<Message> items = FXCollections.observableArrayList();
+
+        if(sessionId == null) {
+            items.clear();
+            messageListView.setItems(items);
+            //sessionListView.setCellFactory(new messageCell());
+        }
+        else {
+
+        }
+    }
+
 }

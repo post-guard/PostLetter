@@ -11,7 +11,10 @@ public class WebSocketMessage extends ClientWebSocket {
     public ArrayList<Message> messageList;
 
     public WebSocketMessage(String url) {
+
         super(url);
+        messageList = new ArrayList<>();
+        // 记得初始化列表不然会炸
     }
 
     @Override
@@ -23,14 +26,13 @@ public class WebSocketMessage extends ClientWebSocket {
 
         try {
             Message message = objectMapper.readValue(text,Message.class);
-            //TODO:这里list添加操作后socket必断连，原因待查
-            //messageList.add(message);
+
+            messageList.add(message);
 
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
 
         System.out.println("WebSocket收到服务端信息 " + text);
-        System.out.println(messageList);
     }
 }
