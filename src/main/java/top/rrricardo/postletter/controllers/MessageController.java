@@ -12,6 +12,7 @@ import javafx.util.StringConverter;
 import top.rrricardo.postletter.exceptions.NetworkException;
 import top.rrricardo.postletter.models.*;
 import top.rrricardo.postletter.services.HttpService;
+import top.rrricardo.postletter.services.MessageDistribution;
 import top.rrricardo.postletter.utils.ControllerBase;
 
 import java.io.IOException;
@@ -53,6 +54,8 @@ public class MessageController extends HomeController implements ControllerBase 
         }
     });
 
+    private MessageDistribution messageDistribution;
+
 
     public void open() {
         try {
@@ -85,6 +88,8 @@ public class MessageController extends HomeController implements ControllerBase 
 
                     sessionListView.setItems(items);
                     sessionListView.setCellFactory(sessionCallback);
+
+                    updateMessageListView();
                 }
             }
 
@@ -99,6 +104,12 @@ public class MessageController extends HomeController implements ControllerBase 
                         currentSession = new_val;
                         sessionLabelName.setText(new_val.getName());
                         sessionLabelLevel.setText("Lv." + new_val.getLevel());
+
+                        if (this.messageDistribution!=null) {
+                            messageDistribution.isStop = true;
+                        }
+                        // 停下先前窗口的刷新信息线程
+                        updateMessageListView(new_val.getId());
                     });
 
             sendTextArea.textProperty().addListener((observable, oldValue, newValue) ->
@@ -143,17 +154,59 @@ public class MessageController extends HomeController implements ControllerBase 
      * 若sessionId为空,则列表显示为空;若为一个正确的session值,则显示这个会话的聊天信息
      * @param sessionId 可以为空，也可以为会话的session id
      */
-    private void updateMessageListView(int... sessionId) {
+    private void updateMessageListView(int... sessionId){
 
         ObservableList<Message> items = FXCollections.observableArrayList();
+        messageListView.setSelectionModel(new NoSelectionModel<>());
+        messageListView.setFocusTraversable( false );
 
-        if(sessionId == null) {
+        if(sessionId.length == 0) {
             items.clear();
             messageListView.setItems(items);
-            //sessionListView.setCellFactory(new messageCell());
+            messageListView.setCellFactory(new MessageCellFactory());
         }
         else {
+            ResponseDTO<Session> sessionResponse = null;
 
+            try {
+                sessionResponse = HttpService.getInstance().get("/session/" + sessionId[0],
+                        new TypeReference<>() {
+                        });
+            } catch (IOException | NetworkException e) {
+                e.printStackTrace();
+            }
+
+            if(sessionResponse != null) {
+                if(sessionResponse.getData() != null) {
+                    // 如果用户还在会话中
+                    ResponseDTO<List<Message>> messageResponse = null;
+
+                    try {
+                        messageResponse = HttpService.getInstance().get("/message/session/" + sessionId[0],
+                                new TypeReference<>() {
+                                });
+                    } catch (IOException | NetworkException e) {
+                        e.printStackTrace();
+                    }
+
+
+                    if(messageResponse != null) {
+                        items.addAll(messageResponse.getData());
+                        messageListView.setItems(items);
+                        messageListView.setCellFactory(new MessageCellFactory());
+                        messageListView.scrollTo(items.size());
+                        messageDistribution = new MessageDistribution(messageListView,items,currentSession.getId());
+                        new Thread(messageDistribution).start();
+                    }
+                }
+            }
+        }
+    }
+
+
+    public void close() {
+        if(messageDistribution != null) {
+            messageDistribution.isStop = true;
         }
     }
 

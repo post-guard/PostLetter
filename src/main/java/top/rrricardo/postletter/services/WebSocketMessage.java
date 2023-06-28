@@ -4,16 +4,16 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import top.rrricardo.postletter.models.Message;
 
-import java.util.ArrayList;
+import java.util.concurrent.ConcurrentLinkedDeque;
 
 public class WebSocketMessage extends ClientWebSocket {
 
-    public ArrayList<Message> messageList;
+    public ConcurrentLinkedDeque<Message> messageList;
 
     public WebSocketMessage(String url) {
 
         super(url);
-        messageList = new ArrayList<>();
+        messageList = new ConcurrentLinkedDeque<>();
         // 记得初始化列表不然会炸
     }
 
@@ -27,7 +27,7 @@ public class WebSocketMessage extends ClientWebSocket {
         try {
             Message message = objectMapper.readValue(text,Message.class);
 
-            messageList.add(message);
+            messageList.offer(message);
 
         } catch (JsonProcessingException e) {
             e.printStackTrace();
