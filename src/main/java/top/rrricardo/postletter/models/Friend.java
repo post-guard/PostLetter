@@ -2,7 +2,7 @@ package top.rrricardo.postletter.models;
 
 import java.io.Serializable;
 
-public class Friend implements Serializable, OrientationBase {
+public class Friend implements Serializable{
     private int id;
     private int userId;
     private int friendId;

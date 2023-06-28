@@ -96,6 +96,30 @@ public class SceneManager {
     }
 
     /**
+     * 在当前显示的窗口之上，再弹出一个新窗口
+     * @param filename 腐朽没落文件名
+     * @param width 窗口宽度
+     * @param height   窗口高度
+     * @param title 窗口标题
+     * @throws IOException  创建过程中的异常
+     */
+    public static void showAnotherScene(String filename, int width, int height, String title) throws IOException{
+        var uri = PostLetter.class.getResource(filename);
+        if (uri == null) {
+            throw new IllegalArgumentException("腐朽没落文件不存在");
+        }
+
+        var loader = new FXMLLoader(uri);
+        Scene scene = new Scene(loader.load(), width, height);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.setTitle(title);
+        stage.setResizable(false);
+        ((ControllerBase)loader.getController()).open();
+        stage.showAndWait();
+    }
+
+    /**
      * 刷新显示当前栈顶的场景
      */
     private static void refresh() {

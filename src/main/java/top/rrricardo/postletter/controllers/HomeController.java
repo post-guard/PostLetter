@@ -26,9 +26,12 @@ public class HomeController implements ControllerBase {
         SceneManager.replaceScene("message-view.fxml", 800, 600, "消息");
     }
 
+    /**
+     * 点联系人直接加载出好友列表
+     */
     @FXML
     protected void onContactsClick() throws IOException{
-        SceneManager.replaceScene("contacts-view.fxml", 800, 600, "联系人");
+        SceneManager.replaceScene("friendList-view.fxml", 800, 600, "联系人-好友");
     }
 
     @FXML

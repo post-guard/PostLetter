@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="390.0" prefWidth="311.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="top.rrricardo.postletter.controllers.SetPermissionController">
+    <children>
+        <ListView fx:id="listView" layoutY="65.0" prefHeight="327.0" prefWidth="311.0" />
+        <Label layoutX="14.0" layoutY="14.0" prefHeight="35.0" prefWidth="166.0" text="请选择您想修改权限的成员" />
+    </children>
+</AnchorPane>
