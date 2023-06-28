@@ -60,7 +60,7 @@ public class LoginController implements ControllerBase{
         var loginDTO = new LoginDTO(usernameInput.getText(), passwordInput.getText());
 
         try {
-            var response = HttpService.postBody("http://10.28.243.52:10188/user/login", loginDTO,
+            var response = HttpService.postBody("http://10.28.166.24:10188/user/login", loginDTO,
                     new TypeReference<ResponseDTO<ResponseData>>() {
                     });
 

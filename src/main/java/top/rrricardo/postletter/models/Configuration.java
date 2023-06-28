@@ -25,7 +25,7 @@ public class Configuration {
     public void setToken(String token) {
         this.token = token;
         //设置令牌
-        HttpService.setAuthorizeToken(token, "http://10.28.243.52:10188");
+        HttpService.setAuthorizeToken(token, "http://10.28.166.24:10188");
     }
 
     public int getId(){
