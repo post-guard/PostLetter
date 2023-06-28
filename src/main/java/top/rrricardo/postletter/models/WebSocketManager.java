@@ -1,6 +1,8 @@
 package top.rrricardo.postletter.models;
 
 import top.rrricardo.postletter.services.ClientWebSocket;
+import top.rrricardo.postletter.services.WebSocketHeartBeat;
+import top.rrricardo.postletter.services.WebSocketMessage;
 
 import java.util.ArrayList;
 import java.util.List;

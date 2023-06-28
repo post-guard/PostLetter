@@ -1,8 +1,8 @@
-package top.rrricardo.postletter.models;
+package top.rrricardo.postletter.services;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import top.rrricardo.postletter.services.ClientWebSocket;
+import top.rrricardo.postletter.models.Message;
 
 import java.util.ArrayList;
 

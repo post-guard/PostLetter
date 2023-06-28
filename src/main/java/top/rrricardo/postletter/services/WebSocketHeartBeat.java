@@ -1,6 +1,4 @@
-package top.rrricardo.postletter.models;
-
-import top.rrricardo.postletter.services.ClientWebSocket;
+package top.rrricardo.postletter.services;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
