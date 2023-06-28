@@ -26,7 +26,7 @@ public class ClientWebSocket {
     public void connect() {
 
         Request request = new Request.Builder()
-                .url("http://10.28.243.52:10188" + this.url)
+                .url("http://10.28.166.24:10188" + this.url)
                 .build();
         clientWebSocket = client.newWebSocket(request, new ClientListener());
 
