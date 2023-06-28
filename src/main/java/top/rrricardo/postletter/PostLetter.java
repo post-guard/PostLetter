@@ -33,7 +33,7 @@ public class PostLetter extends Application {
         if (token != null) {
             //发出一个请求，以校验token的有效性
             try {
-                HttpService.setAuthorizeToken(token, "http://10.28.243.52:10188");
+                HttpService.setAuthorizeToken(token, "http://10.28.166.24:10188");
                 var response = HttpService.getInstance().get("/user/", new TypeReference<ResponseDTO<User[]>>() {
                 });
 
