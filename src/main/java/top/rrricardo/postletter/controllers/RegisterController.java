@@ -79,7 +79,7 @@ public class RegisterController implements ControllerBase {
                                         passwordField1.getText());
 
                                 try {
-                                    var response = HttpService.postBody("http://10.28.243.52:10188/user/register", createUserDTO,
+                                    var response = HttpService.postBody("http://10.28.166.24:10188/user/register", createUserDTO,
                                             new TypeReference<ResponseDTO<Object>>() {
                                             });
 
