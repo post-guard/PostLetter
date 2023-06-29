@@ -6,8 +6,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import top.rrricardo.postletter.exceptions.NetworkException;
 import top.rrricardo.postletter.models.*;
@@ -106,15 +104,6 @@ public class LoginController implements ControllerBase{
         SceneManager.createScene("register-view.fxml", 390, 430, "新用户注册");
     }
 
-    //还没写好，还要改，，，，，，
-    /**
-     * 按下回车，触发登录按钮
-     */
-    @FXML
-    protected void loginEnter(KeyEvent keyEvent) throws IOException{
-        if(keyEvent.getCode().equals(KeyCode.ENTER))    {
-            onOKClick();
-        }
-    }
+
 
 }
