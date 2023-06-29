@@ -12,13 +12,14 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="top.rrricardo.postletter.controllers.UserListController">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="top.rrricardo.postletter.controllers.UserListController">
     <children>
         <VBox alignment="TOP_CENTER" layoutX="14.0" layoutY="14.0" prefHeight="572.0" prefWidth="70.0" spacing="30.0">
             <children>
                 <Button fx:id="messageButton" mnemonicParsing="false" onAction="#onMessageClick" prefHeight="23.0" prefWidth="70.0" text="消息" />
                 <Button fx:id="contactsButton" mnemonicParsing="false" onAction="#onContactsClick" prefHeight="23.0" prefWidth="70.0" text="联系人" />
                 <Button fx:id="personalPageButton" mnemonicParsing="false" onAction="#onPersonalPageClick" prefHeight="23.0" prefWidth="70.0" text="个人主页" />
+                <Button fx:id="friendRequestButton" mnemonicParsing="false" onAction="#onFriendRequestClick" prefHeight="23.0" prefWidth="70.0" text="好友申请" />
                 <Button fx:id="exitButton" mnemonicParsing="false" onAction="#onExitClick" prefHeight="39.0" prefWidth="70.0" text="退出登录" />
             </children>
             <opaqueInsets>

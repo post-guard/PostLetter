@@ -12,13 +12,14 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="top.rrricardo.postletter.controllers.GroupListController">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="top.rrricardo.postletter.controllers.GroupListController">
     <children>
         <VBox alignment="TOP_CENTER" layoutX="14.0" layoutY="14.0" prefHeight="572.0" prefWidth="70.0" spacing="30.0">
             <children>
                 <Button fx:id="messageButton" mnemonicParsing="false" onAction="#onMessageClick" prefHeight="23.0" prefWidth="70.0" text="消息" />
                 <Button fx:id="contactsButton" mnemonicParsing="false" onAction="#onContactsClick" prefHeight="23.0" prefWidth="70.0" text="联系人" />
                 <Button fx:id="personalPageButton" mnemonicParsing="false" onAction="#onPersonalPageClick" prefHeight="23.0" prefWidth="70.0" text="个人主页" />
+                <Button fx:id="friendRequestButton" mnemonicParsing="false" onAction="#onFriendRequestClick" prefHeight="23.0" prefWidth="70.0" text="好友申请" />
                 <Button fx:id="exitButton" mnemonicParsing="false" onAction="#onExitClick" prefHeight="39.0" prefWidth="70.0" text="退出登录" />
             </children>
             <opaqueInsets>
@@ -68,13 +69,13 @@
             </children>
         </VBox>
       <Button fx:id="createGroupButton" layoutX="712.0" layoutY="27.0" mnemonicParsing="false" onAction="#onCreateGroupClick" prefHeight="27.0" prefWidth="70.0" text="创建群聊" />
-      <VBox layoutX="483.0" layoutY="268.0" prefHeight="310.0" prefWidth="131.0" spacing="20.0">
+      <VBox layoutX="475.0" layoutY="268.0" prefHeight="310.0" prefWidth="131.0" spacing="20.0">
          <children>
                 <Button fx:id="sendMessageButton" mnemonicParsing="false" onAction="#onSendMessageClick" prefHeight="33.0" prefWidth="128.0" text="发消息" />
+            <Button fx:id="setPermissionButton" mnemonicParsing="false" onAction="#onSetPermissionClick" prefHeight="33.0" prefWidth="128.0" text="查看成员列表" />
                 <Button fx:id="inviteButton" mnemonicParsing="false" onAction="#onInviteClick" prefHeight="33.0" prefWidth="128.0" text="邀请好友进群" />
             <Button fx:id="exitGroupButton" mnemonicParsing="false" onAction="#onExitGroupClick" prefHeight="33.0" prefWidth="128.0" text="退出群聊" />
             <Button fx:id="removeButton" mnemonicParsing="false" onAction="#onRemoveClick" prefHeight="33.0" prefWidth="128.0" text="踢人" />
-            <Button fx:id="setPermissionButton" mnemonicParsing="false" onAction="#onSetPermissionClick" prefHeight="33.0" prefWidth="128.0" text="修改成员权限" />
          </children>
       </VBox>
     </children>

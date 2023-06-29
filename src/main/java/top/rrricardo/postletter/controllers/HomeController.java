@@ -19,7 +19,10 @@ public class HomeController implements ControllerBase {
     @FXML
     private Button personalPageButton;
     @FXML
+    private Button friendRequestButton;
+    @FXML
     private Button exitButton;
+
 
     @FXML
     protected void onMessageClick() throws IOException{
@@ -39,6 +42,10 @@ public class HomeController implements ControllerBase {
         SceneManager.replaceScene("personalPage-view.fxml", 800, 600, "个人主页");
     }
 
+    @FXML
+    protected void onFriendRequestClick() throws IOException{
+        SceneManager.replaceScene("friendRequest-view.fxml", 800, 600, "好友申请");
+    }
     @FXML
     protected void onExitClick() throws IOException{
         WebSocketManager.getInstance().closeAll();
