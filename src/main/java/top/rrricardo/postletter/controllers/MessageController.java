@@ -86,6 +86,8 @@ public class MessageController extends HomeController implements ControllerBase 
                         }
                     }
 
+                    sendTextArea.setStyle("-fx-focus-color: transparent;");
+
                     sessionListView.setItems(items);
                     sessionListView.setCellFactory(sessionCallback);
 

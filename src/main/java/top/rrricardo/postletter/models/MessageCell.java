@@ -1,15 +1,18 @@
 package top.rrricardo.postletter.models;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import top.rrricardo.postletter.exceptions.NetworkException;
 import top.rrricardo.postletter.services.HttpService;
+import top.rrricardo.postletter.utils.TextUtils;
 
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
@@ -21,6 +24,10 @@ import java.util.Objects;
  */
 public class MessageCell extends ListCell<Message> {
     private final AnchorPane messagePane;
+
+    private final AnchorPane avatarPane;
+
+    private final AnchorPane bubblePane;
     private final Circle avatarBackground;
     private final Label avatarText;
     private final Label avatarName;
@@ -35,6 +42,8 @@ public class MessageCell extends ListCell<Message> {
         super();
 
         messagePane = new AnchorPane();
+        bubblePane = new AnchorPane();
+        avatarPane = new AnchorPane();
         avatarBackground = new Circle();
         avatarText = new Label();
         avatarName = new Label();
@@ -53,10 +62,15 @@ public class MessageCell extends ListCell<Message> {
             e.printStackTrace();
         }
 
-        messagePane.getChildren().add(messageBubble);
-        messagePane.getChildren().add(messageText);
-        messagePane.getChildren().add(avatarBackground);
-        messagePane.getChildren().add(avatarText);
+        avatarPane.getChildren().add(avatarBackground);
+        avatarPane.getChildren().add(avatarText);
+
+        bubblePane.getChildren().add(messageBubble);
+        bubblePane.getChildren().add(messageText);
+
+        messagePane.getChildren().add(avatarPane);
+        messagePane.getChildren().add(bubblePane);
+
         messagePane.getChildren().add(avatarName);
         messagePane.getChildren().add(messageSendTime);
     }
@@ -88,17 +102,35 @@ public class MessageCell extends ListCell<Message> {
 
     private void setMessagePane(Message item, String rotation) {
 
-        messageBubble.setWidth( Math.min(item.getText().length() * 15 + 10 , 160));
-        messageBubble.setHeight( (item.getText().length()/10.0 + 1 ) * 15 + 10);
-        messageBubble.setArcHeight(messageBubble.getHeight()/2);
-        messageBubble.setArcWidth(messageBubble.getHeight()/2);
-        messageBubble.setFill(Color.rgb(130,180,255));
+        avatarPane.setPrefWidth(40);
+        avatarPane.setPrefHeight(40);
 
         messageText.setStyle("-fx-text-fill: #FFFFFF");
         messageText.setText(item.getText());
         messageText.setFont(Font.font(15));
-        messageText.setMaxWidth(160);
+        //messageText.setMinWidth(Region.USE_PREF_SIZE);
+        //messageText.setPrefWidth(TextUtils.computeTextWidth(messageText.getFont(),
+        //        messageText.getText(), 0.0D));
+
+        messageText.setMaxWidth(150);
         messageText.setWrapText(true);
+        var textLength = 1.2 * TextUtils.computeTextWidth(new Font(15),
+                messageText.getText(), 0.0D);
+        var textHeight = 0;
+        if(textLength > 150) {
+            textHeight = ((int) (textLength/150) + 1) * 15;
+            textLength = 150;
+        } else {
+            textHeight = 15;
+        }
+        messageBubble.setWidth(textLength + 10);
+        messageBubble.setHeight(textHeight + 15);
+        messageBubble.setArcHeight(messageBubble.getHeight()/2);
+        messageBubble.setArcWidth(messageBubble.getHeight()/2);
+        messageBubble.setFill(Color.rgb(130,180,255));
+
+        bubblePane.setPrefWidth(messageBubble.getWidth());
+        bubblePane.setPrefHeight(messageBubble.getHeight());
 
         messageSendTime.setFont(Font.font(10));
 
@@ -119,19 +151,24 @@ public class MessageCell extends ListCell<Message> {
 
 
         avatarText.setFont(Font.font(20));
+        avatarText.setAlignment(Pos.CENTER);
         avatarText.setStyle("-fx-text-fill: #FFFFFF");
 
         avatarText.setText(Objects.requireNonNull(getSenderNickname(item)).getNickname().substring(0,1));
         avatarName.setText(Objects.requireNonNull(getSenderNickname(item)).getNickname());
 
-        messagePane.setPrefWidth(Math.min(item.getText().length() * 15 + 10 + 60, 1600));
-        messagePane.setPrefHeight((item.getText().length()/10.0 + 1 ) * 15 + 65);
+        /*messagePane.setPrefWidth(Math.min(item.getText().length() * 15 + 10 + 60, 150));
+        messagePane.setPrefHeight((item.getText().length()/10.0 + 1 ) * 15 + 65);*/
+
 
         messageSendTime.setText(item.getSendTime().format(DateTimeFormatter.ofPattern("MM-dd HH:mm")));
 
+        messagePane.setMinWidth(Region.USE_PREF_SIZE);
+        messagePane.setMinHeight(Region.USE_PREF_SIZE);
         if(Objects.equals(rotation, "left")) {
 
-
+            AnchorPane.clearConstraints(avatarPane);
+            AnchorPane.clearConstraints(bubblePane);
             AnchorPane.clearConstraints(avatarBackground);
             AnchorPane.clearConstraints(avatarText);
             AnchorPane.clearConstraints(avatarName);
@@ -139,26 +176,40 @@ public class MessageCell extends ListCell<Message> {
             AnchorPane.clearConstraints(messageText);
             AnchorPane.clearConstraints(messageSendTime);
 
-            AnchorPane.setTopAnchor(avatarBackground,5.0);
-            AnchorPane.setLeftAnchor(avatarBackground,10.0);
-            AnchorPane.setTopAnchor(avatarText,12.0);
-            AnchorPane.setLeftAnchor(avatarText,22.0);
+            AnchorPane.setTopAnchor(avatarPane,0.0);
+            AnchorPane.setLeftAnchor(avatarPane,5.0);
+
+            AnchorPane.setTopAnchor(avatarBackground,0.0);
+            AnchorPane.setLeftAnchor(avatarBackground,0.0);
+            AnchorPane.setTopAnchor(avatarText,0.0);
+            AnchorPane.setBottomAnchor(avatarText,0.0);
+            AnchorPane.setLeftAnchor(avatarText,0.0);
+            AnchorPane.setRightAnchor(avatarText,0.0);
 
             AnchorPane.setTopAnchor(avatarName,5.0);
             AnchorPane.setLeftAnchor(avatarName,55.0);
 
             AnchorPane.setTopAnchor(messageSendTime,50.0);
-            AnchorPane.setLeftAnchor(messageSendTime,5.0);
+            AnchorPane.setLeftAnchor(messageSendTime,0.0);
 
-            AnchorPane.setTopAnchor(messageBubble,25.0);
-            AnchorPane.setLeftAnchor(messageBubble,60.0);
+            AnchorPane.setTopAnchor(bubblePane,25.0);
+            AnchorPane.setLeftAnchor(bubblePane,60.0);
 
-            AnchorPane.setTopAnchor(messageText,30.0);
-            AnchorPane.setLeftAnchor(messageText,65.0);
+            AnchorPane.setTopAnchor(messageBubble,0.0);
+            //AnchorPane.setBottomAnchor(messageBubble,0.0);
+            AnchorPane.setLeftAnchor(messageBubble,0.0);
+            //AnchorPane.setRightAnchor(messageBubble,0.0);
+
+            AnchorPane.setTopAnchor(messageText,5.0);
+            //AnchorPane.setBottomAnchor(messageText,5.0);
+            AnchorPane.setLeftAnchor(messageText,5.0);
+            //AnchorPane.setRightAnchor(messageText,5.0);
 
         }
         else if(Objects.equals(rotation, "right")){
 
+            AnchorPane.clearConstraints(avatarPane);
+            AnchorPane.clearConstraints(bubblePane);
             AnchorPane.clearConstraints(avatarBackground);
             AnchorPane.clearConstraints(avatarText);
             AnchorPane.clearConstraints(avatarName);
@@ -166,22 +217,37 @@ public class MessageCell extends ListCell<Message> {
             AnchorPane.clearConstraints(messageText);
             AnchorPane.clearConstraints(messageSendTime);
 
-            AnchorPane.setTopAnchor(avatarBackground,5.0);
-            AnchorPane.setRightAnchor(avatarBackground,10.0);
-            AnchorPane.setTopAnchor(avatarText,12.0);
-            AnchorPane.setRightAnchor(avatarText,22.0);
+
+            AnchorPane.setTopAnchor(avatarPane,0.0);
+            AnchorPane.setRightAnchor(avatarPane,5.0);
+
+            AnchorPane.setTopAnchor(avatarBackground,0.0);
+            AnchorPane.setLeftAnchor(avatarBackground,0.0);
+
+            AnchorPane.setTopAnchor(avatarText,0.0);
+            AnchorPane.setBottomAnchor(avatarText,0.0);
+            AnchorPane.setLeftAnchor(avatarText,0.0);
+            AnchorPane.setRightAnchor(avatarText,0.0);
 
             AnchorPane.setTopAnchor(avatarName,5.0);
             AnchorPane.setRightAnchor(avatarName,55.0);
 
             AnchorPane.setTopAnchor(messageSendTime,50.0);
-            AnchorPane.setRightAnchor(messageSendTime,5.0);
+            AnchorPane.setRightAnchor(messageSendTime,0.0);
 
-            AnchorPane.setTopAnchor(messageBubble,25.0);
-            AnchorPane.setRightAnchor(messageBubble,60.0);
 
-            AnchorPane.setTopAnchor(messageText,30.0);
-            AnchorPane.setRightAnchor(messageText,65.0);
+            AnchorPane.setTopAnchor(bubblePane,25.0);
+            AnchorPane.setRightAnchor(bubblePane,60.0);
+
+            AnchorPane.setTopAnchor(messageBubble,0.0);
+            //AnchorPane.setBottomAnchor(messageBubble,0.0);
+            AnchorPane.setRightAnchor(messageBubble,0.0);
+            //AnchorPane.setRightAnchor(messageBubble,0.0);
+
+            AnchorPane.setTopAnchor(messageText,5.0);
+            //AnchorPane.setBottomAnchor(messageText,5.0);
+            //AnchorPane.setRightAnchor(messageText,5.0);
+            AnchorPane.setRightAnchor(messageText,5.0);
         }
     }
 
