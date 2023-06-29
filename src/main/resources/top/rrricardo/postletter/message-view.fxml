@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="top.rrricardo.postletter.controllers.MessageController">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="top.rrricardo.postletter.controllers.MessageController">
    <children>
       <VBox alignment="TOP_CENTER" layoutX="14.0" layoutY="14.0" prefHeight="572.0" prefWidth="70.0" spacing="30.0">
          <children>
@@ -25,23 +25,24 @@
          </opaqueInsets>
       </VBox>
       <Separator layoutX="96.0" opacity="0.8" orientation="VERTICAL" prefHeight="600.0" prefWidth="7.0" />
-      <AnchorPane layoutX="110.0" layoutY="10.0" prefHeight="579.0" prefWidth="227.0">
+      <AnchorPane layoutX="110.0" layoutY="10.0" prefHeight="579.0" prefWidth="221.0">
          <children>
-            <ListView fx:id="sessionListView" fixedCellSize="40.0" prefHeight="579.0" prefWidth="227.0" />
+            <ListView fx:id="sessionListView" fixedCellSize="40.0" prefHeight="579.0" prefWidth="219.0" />
          </children>
       </AnchorPane>
       <AnchorPane layoutX="337.0" layoutY="10.0" prefHeight="579.0" prefWidth="457.0">
          <children>
             <ListView fx:id="messageListView" layoutX="5.0" layoutY="73.0" prefHeight="334.0" prefWidth="457.0" AnchorPane.bottomAnchor="175.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="70.0" />
-            <TextArea fx:id="sendTextArea" layoutY="404.0" prefHeight="130.0" prefWidth="457.0" promptText="无气凡你妈biss" wrapText="true" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="404.0" />
+            <TextArea fx:id="sendTextArea" layoutY="404.0" prefHeight="130.0" prefWidth="457.0" promptText="文明发言，从你我做起" wrapText="true" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="404.0" />
             <Button fx:id="sendButton" layoutX="379.0" layoutY="540.0" mnemonicParsing="false" onAction="#onSendButtonClick" prefHeight="31.0" prefWidth="70.0" text="发送" />
-            <Label fx:id="sessionLabelName" layoutX="14.0" layoutY="21.0" prefHeight="31.0" prefWidth="227.0" text="test">
+            <Label fx:id="sessionLabelName" layoutX="14.0" layoutY="21.0" prefHeight="31.0" prefWidth="227.0">
                <font>
                   <Font size="16.0" />
                </font>
             </Label>
-            <Label fx:id="sessionLabelLevel" layoutX="267.0" layoutY="29.0" prefHeight="14.0" prefWidth="181.0" text="lv100" />
+            <Label fx:id="sessionLabelLevel" layoutX="267.0" layoutY="29.0" prefHeight="14.0" prefWidth="181.0" />
          </children>
       </AnchorPane>
+      <Separator layoutX="326.0" layoutY="-6.0" opacity="0.8" orientation="VERTICAL" prefHeight="600.0" prefWidth="7.0" />
    </children>
 </AnchorPane>

@@ -13,14 +13,13 @@ import top.rrricardo.postletter.exceptions.NetworkException;
 import top.rrricardo.postletter.models.*;
 import top.rrricardo.postletter.services.HttpService;
 import top.rrricardo.postletter.services.MessageDistribution;
-import top.rrricardo.postletter.utils.ControllerBase;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
-public class MessageController extends HomeController implements ControllerBase {
+public class MessageController extends HomeController{
 
 
     @FXML
@@ -85,8 +84,6 @@ public class MessageController extends HomeController implements ControllerBase 
                             items.add(sessionResponse.getData());
                         }
                     }
-
-                    sendTextArea.setStyle("-fx-focus-color: transparent;");
 
                     sessionListView.setItems(items);
                     sessionListView.setCellFactory(sessionCallback);
