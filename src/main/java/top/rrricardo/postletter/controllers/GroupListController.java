@@ -45,7 +45,7 @@ public class GroupListController extends HomeController{
     @FXML
     private Button removeButton;
     @FXML
-    private Button setPermissionButton;
+    private Button participantButton;
     @FXML
     private ListView<GroupDTO> listView = new ListView<>();
     private GroupDTO groupSelected; //保存选中的Group对象
@@ -110,7 +110,9 @@ public class GroupListController extends HomeController{
     @FXML
     protected void onInviteClick() throws IOException{
         SceneManager.showAnotherScene("inviteFriend-view.fxml", 311, 390, "邀请好友入群");
-        displayInformation();
+        String [] array1 = label3.getText().split("：");
+        String [] array2 = array1[1].split("/");
+        label3.setText(Integer.parseInt(array2[0]) + 1 + "/" + array2[1]);
 
     }
     @FXML
@@ -118,7 +120,7 @@ public class GroupListController extends HomeController{
         //群主退群，群直接解散
         if(currentUserPermission == 3){
             Alert alert1 = new Alert(Alert.AlertType.CONFIRMATION);
-            alert1.setHeaderText("是否解散群聊？");
+            alert1.setHeaderText("您是群主，退出后将解散群聊，是否继续？");
             Optional<ButtonType> result = alert1.showAndWait();
             if(result.isPresent()){
                 ButtonType buttonType = result.get();
@@ -179,8 +181,9 @@ public class GroupListController extends HomeController{
         displayInformation();
     }
     @FXML
-    protected void onSetPermissionClick() throws IOException{
-        SceneManager.showAnotherScene("setPermission-view.fxml", 311, 390, "设置权限");
+    protected void onParticipantClick() throws IOException{
+        Common.permission = currentUserPermission;
+        SceneManager.showAnotherScene("participantList-view.fxml", 311, 390, "所有群成员");
 
     }
 
@@ -227,13 +230,15 @@ public class GroupListController extends HomeController{
 
                 sendMessageButton.setDisable(false);
                 sendMessageButton.setVisible(true);
+                participantButton.setDisable(false);
+                participantButton.setVisible(true);
                 inviteButton.setDisable(false);
                 inviteButton.setVisible(true);
                 exitGroupButton.setDisable(false);
                 exitGroupButton.setVisible(true);
                 //根据用户权限提供相应额外功能
                 if(currentUserPermission == 3){
-                    setButtonForOwner();
+                    setButtonForManager();
                     label4.setText("您的权限：群主");
                 }
                 else if(currentUserPermission == 1){
@@ -275,8 +280,8 @@ public class GroupListController extends HomeController{
         exitGroupButton.setVisible(false);
         removeButton.setDisable(true);
         removeButton.setVisible(false);
-        setPermissionButton.setDisable(true);
-        setPermissionButton.setVisible(false);
+        participantButton.setDisable(true);
+        participantButton.setVisible(false);
     }
 
     private void setButtonForMembers(){
@@ -285,12 +290,6 @@ public class GroupListController extends HomeController{
     private void setButtonForManager(){
         removeButton.setDisable(false);
         removeButton.setVisible(true);
-    }
-    private void setButtonForOwner(){
-        removeButton.setDisable(false);
-        removeButton.setVisible(true);
-        setPermissionButton.setDisable(false);
-        setPermissionButton.setVisible(true);
     }
 
 }

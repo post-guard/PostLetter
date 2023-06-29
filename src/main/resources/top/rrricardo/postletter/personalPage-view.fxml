@@ -2,9 +2,13 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="top.rrricardo.postletter.controllers.PersonalPageController">
     <children>
@@ -21,5 +25,27 @@
             </opaqueInsets>
         </VBox>
         <Separator layoutX="96.0" opacity="0.8" orientation="VERTICAL" prefHeight="600.0" prefWidth="7.0" AnchorPane.leftAnchor="96.0" />
+      <Circle fill="DODGERBLUE" layoutX="410.0" layoutY="150.0" radius="62.0" stroke="WHITE" strokeType="INSIDE" />
+      <Label fx:id="circleLabel" alignment="CENTER" layoutX="381.0" layoutY="118.0" prefHeight="58.0" prefWidth="58.0" textFill="WHITE">
+         <font>
+            <Font size="50.0" />
+         </font>
+      </Label>
+      <VBox layoutX="336.0" layoutY="238.0" prefHeight="200.0" prefWidth="260.0">
+         <children>
+            <HBox prefHeight="60.0" prefWidth="260.0">
+               <children>
+                  <Label prefHeight="60.0" prefWidth="122.0" text="昵称" />
+                  <Label fx:id="nicknameLabel" prefHeight="60.0" prefWidth="122.0" text="-" />
+               </children>
+            </HBox>
+            <HBox prefHeight="60.0" prefWidth="260.0">
+               <children>
+                  <Label prefHeight="60.0" prefWidth="122.0" text="账号" />
+                  <Label fx:id="usernameLabel" prefHeight="75.0" prefWidth="122.0" text="-" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
     </children>
 </AnchorPane>
