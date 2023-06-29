@@ -1,21 +1,19 @@
-package top.rrricardo.postletter.models;
+package top.rrricardo.postletter.services;
 
-import top.rrricardo.postletter.services.ClientWebSocket;
-import top.rrricardo.postletter.services.WebSocketHeartBeat;
-import top.rrricardo.postletter.services.WebSocketMessage;
+import top.rrricardo.postletter.models.Configuration;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class WebSocketManager {
-    private WebSocketManager() {
+public class WebSocketService {
+    private WebSocketService() {
         webSocketList = new ArrayList<>();
     }
 
-    private static final WebSocketManager webSocketManager = new WebSocketManager();
+    private static final WebSocketService webSocketManager = new WebSocketService();
 
-    public static WebSocketManager getInstance() {
+    public static WebSocketService getInstance() {
         return webSocketManager;
     }
 

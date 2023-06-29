@@ -20,8 +20,6 @@ public class TextUtils {
     }
 
     public static double computeTextWidth(Font font, String text, double help0) {
-
-
         helper.setText(text);
         helper.setFont(font);
 

@@ -10,6 +10,7 @@ import javafx.scene.paint.Color;
 import top.rrricardo.postletter.exceptions.NetworkException;
 import top.rrricardo.postletter.models.*;
 import top.rrricardo.postletter.services.HttpService;
+import top.rrricardo.postletter.services.WebSocketService;
 import top.rrricardo.postletter.utils.ControllerBase;
 import top.rrricardo.postletter.utils.SceneManager;
 
@@ -77,7 +78,7 @@ public class LoginController implements ControllerBase{
                 }
 
                 //登录成功后，显示消息界面
-                WebSocketManager.getInstance().init();
+                WebSocketService.getInstance().init();
                 SceneManager.createScene("message-view.fxml", 800, 600, "主页");
                 label.setText("");
             }

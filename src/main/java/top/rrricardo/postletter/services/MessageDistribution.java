@@ -4,7 +4,6 @@ import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ListView;
 import top.rrricardo.postletter.models.Message;
-import top.rrricardo.postletter.models.WebSocketManager;
 
 import java.util.ArrayList;
 
@@ -27,7 +26,7 @@ public class MessageDistribution implements Runnable {
 
     @Override
     public void run() {
-        WebSocketMessage webSocketMessage = (WebSocketMessage) WebSocketManager.webSocketList.get(0);
+        WebSocketMessage webSocketMessage = (WebSocketMessage) WebSocketService.webSocketList.get(0);
         while (!isStop) {
             ArrayList<Message> deleteList = new ArrayList<>();
             for(Message message : webSocketMessage.messageList) {

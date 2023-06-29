@@ -2,7 +2,7 @@ package top.rrricardo.postletter.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import top.rrricardo.postletter.models.WebSocketManager;
+import top.rrricardo.postletter.services.WebSocketService;
 import top.rrricardo.postletter.utils.ControllerBase;
 import top.rrricardo.postletter.utils.SceneManager;
 
@@ -48,7 +48,7 @@ public class HomeController implements ControllerBase {
     }
     @FXML
     protected void onExitClick() throws IOException{
-        WebSocketManager.getInstance().closeAll();
+        WebSocketService.getInstance().closeAll();
         SceneManager.replaceScene("log-view.fxml", 390, 430, "登录");
     }
 

@@ -162,7 +162,7 @@ public class MessageController extends HomeController{
         if(sessionId.length == 0) {
             items.clear();
             messageListView.setItems(items);
-            messageListView.setCellFactory(new MessageCellFactory());
+            messageListView.setCellFactory(messageListView -> new MessageCell());
         }
         else {
             ResponseDTO<Session> sessionResponse = null;
@@ -192,7 +192,7 @@ public class MessageController extends HomeController{
                     if(messageResponse != null) {
                         items.addAll(messageResponse.getData());
                         messageListView.setItems(items);
-                        messageListView.setCellFactory(new MessageCellFactory());
+                        messageListView.setCellFactory(messageListView -> new MessageCell());
                         messageListView.scrollTo(items.size());
                         messageDistribution = new MessageDistribution(messageListView,items,currentSession.getId());
                         new Thread(messageDistribution).start();
