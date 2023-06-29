@@ -81,6 +81,7 @@ public class MessageCell extends ListCell<Message> {
                 // 如果是其他用户的发言，会浮在左边
                 this.setMessagePane(item,"left");
             }
+            setText(null);
             setGraphic(messagePane);
         }
     }
@@ -129,10 +130,17 @@ public class MessageCell extends ListCell<Message> {
         messageSendTime.setText(item.getSendTime().format(DateTimeFormatter.ofPattern("MM-dd HH:mm")));
 
         if(Objects.equals(rotation, "left")) {
-            
+
+
+            AnchorPane.clearConstraints(avatarBackground);
+            AnchorPane.clearConstraints(avatarText);
+            AnchorPane.clearConstraints(avatarName);
+            AnchorPane.clearConstraints(messageBubble);
+            AnchorPane.clearConstraints(messageText);
+            AnchorPane.clearConstraints(messageSendTime);
+
             AnchorPane.setTopAnchor(avatarBackground,5.0);
             AnchorPane.setLeftAnchor(avatarBackground,10.0);
-
             AnchorPane.setTopAnchor(avatarText,12.0);
             AnchorPane.setLeftAnchor(avatarText,22.0);
 
@@ -149,10 +157,17 @@ public class MessageCell extends ListCell<Message> {
             AnchorPane.setLeftAnchor(messageText,65.0);
 
         }
-        else {
+        else if(Objects.equals(rotation, "right")){
+
+            AnchorPane.clearConstraints(avatarBackground);
+            AnchorPane.clearConstraints(avatarText);
+            AnchorPane.clearConstraints(avatarName);
+            AnchorPane.clearConstraints(messageBubble);
+            AnchorPane.clearConstraints(messageText);
+            AnchorPane.clearConstraints(messageSendTime);
+
             AnchorPane.setTopAnchor(avatarBackground,5.0);
             AnchorPane.setRightAnchor(avatarBackground,10.0);
-
             AnchorPane.setTopAnchor(avatarText,12.0);
             AnchorPane.setRightAnchor(avatarText,22.0);
 
