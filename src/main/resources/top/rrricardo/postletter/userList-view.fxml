@@ -46,7 +46,7 @@
                 </HBox>
             </children>
         </AnchorPane>
-        <Circle fx:id="circle" fill="DODGERBLUE" layoutX="535.0" layoutY="167.0" radius="52.0" stroke="BLACK" strokeType="INSIDE" visible="false" />
+        <Circle fx:id="circle" fill="DODGERBLUE" layoutX="535.0" layoutY="167.0" radius="52.0" stroke="WHITE" strokeType="INSIDE" visible="false" />
         <Label fx:id="circleLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="503.0" layoutY="139.0" prefHeight="55.0" prefWidth="64.0" textAlignment="CENTER" textFill="WHITE">
             <font>
                 <Font size="35.0" />

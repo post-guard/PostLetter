@@ -2,12 +2,16 @@
 
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane prefHeight="390.0" prefWidth="311.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="top.rrricardo.postletter.controllers.RemoveMemberController">
+<AnchorPane prefHeight="390.0" prefWidth="311.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="top.rrricardo.postletter.controllers.RemoveMemberController">
     <children>
-        <ListView fx:id="listView" layoutY="65.0" prefHeight="327.0" prefWidth="311.0" />
-        <Label layoutX="14.0" layoutY="14.0" prefHeight="35.0" prefWidth="166.0" text="请选择您想移除的成员" />
+        <Label layoutX="7.0" layoutY="11.0" prefHeight="35.0" prefWidth="166.0" text="请选择您想移除的成员" />
+      <ScrollPane layoutY="47.0" prefHeight="341.0" prefWidth="311.0">
+         <content>
+              <ListView fx:id="listView" fixedCellSize="40.0" focusTraversable="false" prefHeight="341.0" prefWidth="294.0" />
+         </content>
+      </ScrollPane>
     </children>
 </AnchorPane>

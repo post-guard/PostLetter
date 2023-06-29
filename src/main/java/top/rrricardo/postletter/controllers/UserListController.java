@@ -85,6 +85,7 @@ public class UserListController extends HomeController{
                             }
                             circle.setVisible(true);
                             circleLabel.setText(String.valueOf(newUser.getNickname().charAt(0))); //头像只显示第一个字符
+                            circleLabel.setStyle("-fx-text-fill: White");
                             label1.setText("昵称");
                             label2.setText(newUser.getNickname());
                             label3.setText("账号");

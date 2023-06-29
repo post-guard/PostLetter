@@ -46,7 +46,7 @@
                 </HBox>
             </children>
         </AnchorPane>
-        <Circle fx:id="circle" fill="DODGERBLUE" layoutX="535.0" layoutY="115.0" radius="52.0" stroke="BLACK" strokeType="INSIDE" visible="false" />
+        <Circle fx:id="circle" fill="DODGERBLUE" layoutX="535.0" layoutY="115.0" radius="52.0" stroke="WHITE" strokeType="INSIDE" visible="false" />
         <Label fx:id="circleLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="503.0" layoutY="87.0" prefHeight="55.0" prefWidth="64.0" textAlignment="CENTER" textFill="WHITE">
             <font>
                 <Font size="35.0" />
@@ -72,7 +72,7 @@
       <VBox layoutX="475.0" layoutY="268.0" prefHeight="310.0" prefWidth="131.0" spacing="20.0">
          <children>
                 <Button fx:id="sendMessageButton" mnemonicParsing="false" onAction="#onSendMessageClick" prefHeight="33.0" prefWidth="128.0" text="发消息" />
-            <Button fx:id="setPermissionButton" mnemonicParsing="false" onAction="#onSetPermissionClick" prefHeight="33.0" prefWidth="128.0" text="查看成员列表" />
+            <Button fx:id="participantButton" mnemonicParsing="false" onAction="#onParticipantClick" prefHeight="33.0" prefWidth="128.0" text="查看成员列表" />
                 <Button fx:id="inviteButton" mnemonicParsing="false" onAction="#onInviteClick" prefHeight="33.0" prefWidth="128.0" text="邀请好友进群" />
             <Button fx:id="exitGroupButton" mnemonicParsing="false" onAction="#onExitGroupClick" prefHeight="33.0" prefWidth="128.0" text="退出群聊" />
             <Button fx:id="removeButton" mnemonicParsing="false" onAction="#onRemoveClick" prefHeight="33.0" prefWidth="128.0" text="踢人" />
